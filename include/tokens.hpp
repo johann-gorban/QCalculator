@@ -1,0 +1,133 @@
+#include <string>
+
+typedef enum {
+    LEFT,
+    RIGHT
+} OperatorAssociativity;
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+class Token {
+public:
+    virtual ~Token() = 0; 
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+class Operator : public Token {
+private:
+    OperatorAssociativity associativity;
+    unsigned int precedance;
+protected:
+    void set_precedance(unsigned int precedance);
+
+    void set_associativity(OperatorAssociativity associativity);
+public:
+    Operator();
+
+    virtual unsigned int get_precedance() const;
+
+    virtual OperatorAssociativity get_associativity() const;
+    
+    virtual ~Operator() = 0;
+};
+
+inline Operator::~Operator() = default; // Avoid multiple definition but allow define in hpp
+
+
+class OperatorAddition : protected Operator {
+public:
+    OperatorAddition();
+
+    ~OperatorAddition() = default;
+};
+
+
+class OperatorSubstraction : protected Operator {
+public:
+    explicit OperatorSubstraction();
+
+    ~OperatorSubstraction() = default;
+};
+
+
+class OperatorMultiplication : protected Operator {
+public:
+    explicit OperatorMultiplication();
+
+    ~OperatorMultiplication() = default;
+};
+
+
+class OperatorDivision : protected Operator {
+public:
+    explicit OperatorDivision();
+
+    ~OperatorDivision() = default;
+};
+
+
+class OperatorMinus : protected Operator {
+public:
+    explicit OperatorMinus();
+
+    ~OperatorMinus() = default;
+};
+
+
+class OperatorPower : protected Operator {
+public:
+    explicit OperatorPower();
+
+    ~OperatorPower() = default;
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+class Number : public Token {
+private:
+    const double value;
+public:
+    explicit Number(const double value);
+
+    double get_value() const;
+
+    ~Number() = default;
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+class Function : public Token {
+
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+class Separator : public Token {
+
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+class Paranthesis : public Token {
+
+};
+
+
+class LeftParanthesis : public Paranthesis {
+
+};
+
+
+class RightParanthesis : public Paranthesis {
+
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////

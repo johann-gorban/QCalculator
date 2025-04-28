@@ -1,0 +1,57 @@
+#include "tokens.hpp"
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+Operator::Operator() {};
+
+unsigned int Operator::get_precedance() const {
+    return this->precedance;
+}
+
+OperatorAssociativity Operator::get_associativity() const {
+    return this->associativity;
+}
+
+void Operator::set_associativity(OperatorAssociativity associativity) {
+    this->associativity = associativity;
+}
+
+void Operator::set_precedance(unsigned int precedance) {
+    this->precedance = precedance;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+OperatorAddition::OperatorAddition() {
+    this->set_associativity(OperatorAssociativity::LEFT);
+    this->set_precedance(2);
+}
+
+OperatorSubstraction::OperatorSubstraction() {
+    this->set_associativity(OperatorAssociativity::LEFT);
+    this->set_precedance(2);
+}
+
+OperatorMultiplication::OperatorMultiplication() {
+    this->set_associativity(OperatorAssociativity::LEFT);
+    this->set_precedance(3);
+}
+
+OperatorDivision::OperatorDivision() {
+    this->set_associativity(OperatorAssociativity::LEFT);
+    this->set_precedance(3);
+}
+
+OperatorPower::OperatorPower() {
+    this->set_associativity(OperatorAssociativity::LEFT);
+    this->set_precedance(5);
+}
+
+OperatorMinus::OperatorMinus() {
+    this->set_associativity(OperatorAssociativity::RIGHT);
+    this->set_precedance(6);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
