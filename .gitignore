@@ -31,6 +31,10 @@
 *.out
 *.app
 
-# Built files
+# Build files
 build/*
 !build/.gitl
+
+# Project files
+.vscode/*
+.vscode/
