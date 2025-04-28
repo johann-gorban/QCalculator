@@ -10,8 +10,7 @@ add_compile_options(-Wall)
 
 # Explicit source list matching Makefile's SRC
 set(SOURCES
-    source/main.cpp
-    source/calculator.cpp
+    source/tokens.cpp
 )
 
 # Create executable (matches Makefile's TARGET)
