@@ -2,7 +2,7 @@
 
 #include <memory>
 
-void StartState::handle_char(TokenizerContext& context, char c) {
+void StartState::handle_char(LexerContext& context, char c) {
     std::unique_ptr<State> new_state;
     // Pay attention to possible bug here (because of start with .) 
     if (std::isdigit(c) || c == '.') {

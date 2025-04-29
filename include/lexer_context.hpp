@@ -7,13 +7,13 @@
 #include "states.hpp"
 
 
-class TokenizerContext {
+class LexerContext {
 private:
     std::unique_ptr<State> current_state;
     std::string buffer;
     std::vector<std::shared_ptr<Token>> tokens;
 public:
-    explicit TokenizerContext(std::unique_ptr<State> start_state);
+    explicit LexerContext(std::unique_ptr<State> start_state);
 
     std::vector<std::shared_ptr<Token>> get_tokens() const;
 
