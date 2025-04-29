@@ -5,13 +5,13 @@ void Cleaner::clean_expression(std::string &expression) {
     // expression_copy.reserve(expression.size());
 
     for (auto ch : expression) {
-        if (!dirty_chars.contains(ch)) {
-            expression_copy += ch;
-        }
-        // If C++20 is not allowed
-        // if (dirty_chars.find(ch) == dirty_chars.end()) {
-        //     expression += ch;
+        // if C++20 is allowed
+        // if (!dirty_chars.contains(ch)) {
+        //     expression_copy += ch;
         // }
+        if (dirty_chars.find(ch) == dirty_chars.end()) {
+            expression += ch;
+        }
     }
 
     expression = expression_copy;
