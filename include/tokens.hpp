@@ -20,16 +20,16 @@ class Operator : public Token {
 private:
     OperatorAssociativity associativity;
     unsigned int precedance;
-protected:
+public:
     void set_precedance(unsigned int precedance);
 
     void set_associativity(OperatorAssociativity associativity);
 public:
     Operator();
 
-    virtual unsigned int get_precedance() const;
+    unsigned int get_precedance() const;
 
-    virtual OperatorAssociativity get_associativity() const;
+    OperatorAssociativity get_associativity() const;
     
     virtual ~Operator() = 0;
 };
@@ -37,7 +37,7 @@ public:
 inline Operator::~Operator() = default; // Avoid multiple definition but allow define in hpp
 
 
-class OperatorAddition : protected Operator {
+class OperatorAddition : public Operator {
 public:
     OperatorAddition();
 
@@ -45,7 +45,7 @@ public:
 };
 
 
-class OperatorSubstraction : protected Operator {
+class OperatorSubstraction : public Operator {
 public:
     explicit OperatorSubstraction();
 
@@ -53,7 +53,7 @@ public:
 };
 
 
-class OperatorMultiplication : protected Operator {
+class OperatorMultiplication : public Operator {
 public:
     explicit OperatorMultiplication();
 
@@ -61,7 +61,7 @@ public:
 };
 
 
-class OperatorDivision : protected Operator {
+class OperatorDivision : public Operator {
 public:
     explicit OperatorDivision();
 
@@ -69,7 +69,7 @@ public:
 };
 
 
-class OperatorMinus : protected Operator {
+class OperatorMinus : public Operator {
 public:
     explicit OperatorMinus();
 
@@ -77,7 +77,7 @@ public:
 };
 
 
-class OperatorPower : protected Operator {
+class OperatorPower : public Operator {
 public:
     explicit OperatorPower();
 
