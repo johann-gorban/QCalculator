@@ -9,9 +9,9 @@
 
 class LexerContext {
 private:
+    std::vector<std::shared_ptr<Token>> tokens;
     std::unique_ptr<State> current_state;
     std::string buffer;
-    std::vector<std::shared_ptr<Token>> tokens;
 public:
     explicit LexerContext(std::unique_ptr<State> start_state);
 
