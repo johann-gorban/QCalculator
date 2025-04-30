@@ -5,6 +5,12 @@
 #include <algorithm>
 #include <stdexcept>
 
+
+void State::finish_input(LexerContext &context) {
+    // Empty as template
+}
+
+
 void StartState::handle_char(LexerContext &context, char c) {
     std::unique_ptr<State> new_state;
     // Pay attention to possible bug here (because of start with .) 
@@ -27,12 +33,6 @@ void StartState::handle_char(LexerContext &context, char c) {
     else if (c == ',') {
         new_state = std::make_unique<CommaState>();
     }
-
-}
-
-
-// Is it better here to put delete?
-void StartState::finish_input(LexerContext &context) {
 
 }
 
@@ -62,7 +62,7 @@ void NumberState::handle_char(LexerContext &context, char c) {
     else if (std::isalpha(c)) {
         throw std::runtime_error("Invalid number format"); // Maybe add ErrorState?
     }
-
+    
     context.set_state(std::move(new_state));
 }
 
