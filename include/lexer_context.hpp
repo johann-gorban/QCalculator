@@ -19,6 +19,8 @@ public:
 
     void set_state(std::unique_ptr<State> new_state);
 
+    const std::string &get_buffer() const;
+
     void emit_token(std::shared_ptr<Token> token);
 
     void append_buffer(char c);

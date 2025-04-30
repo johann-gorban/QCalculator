@@ -18,6 +18,11 @@ void LexerContext::finish() {
 }
 
 
+const std::string &LexerContext::get_buffer() const {
+    return this->buffer;
+}
+
+
 std::vector<std::shared_ptr<Token>> LexerContext::get_tokens() const{
     return this->tokens;
 }
