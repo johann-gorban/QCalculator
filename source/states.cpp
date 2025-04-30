@@ -26,3 +26,7 @@ void StartState::handle_char(LexerContext& context, char c) {
     }
 
 }
+
+void StartState::finish_input(LexerContext &context) {
+
+}
