@@ -11,7 +11,13 @@ typedef enum {
 //////////////////////////////////////////////////////////////////////////////////////////
 
 class Token {
+private:
+    std::string name;
 public:
+    void set_name(const std::string &name);
+
+    const std::string &get_name() const;
+
     virtual ~Token() = 0; 
 };
 
@@ -40,6 +46,8 @@ inline Operator::~Operator() = default; // Avoid multiple definition but allow d
 
 
 class OperatorAddition : public Operator {
+private:
+
 public:
     OperatorAddition();
 
