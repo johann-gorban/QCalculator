@@ -80,3 +80,14 @@ Number::Number(const double value) : value(value) {
 double Number::get_value() const {
     return this->value;
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+LeftParanthesis::LeftParanthesis() {
+    this->set_name("LEFT_PARANTHESIS");
+}
+
+RightParanthesis::RightParanthesis() {
+    this->set_name("RIGHT_PARANTHESIS");
+}
