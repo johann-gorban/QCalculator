@@ -2,7 +2,6 @@
 
 #include <stack>
 
-
 class Command {
 public:
     virtual void execute(std::stack<double> &computation_stack) = 0;
