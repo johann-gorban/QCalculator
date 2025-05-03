@@ -2,16 +2,16 @@
 
 
 CommandManager::CommandManager() {
-    this->commands["+"] = std::make_shared<AdditionCommand>();
-    this->commands["-"] = std::make_shared<SubstractCommand>();
-    this->commands["*"] = std::make_shared<MultiplyCommand>();
-    this->commands["/"] = std::make_shared<DivisionCommand>();
-    this->commands["^"] = std::make_shared<PowerCommand>();
-    this->commands["~"] = std::make_shared<MinusCommand>();
+    this->commands["ADD"] = std::make_shared<AdditionCommand>();
+    this->commands["SUB"] = std::make_shared<SubstractCommand>();
+    this->commands["MUL"] = std::make_shared<MultiplyCommand>();
+    this->commands["DIV"] = std::make_shared<DivisionCommand>();
+    this->commands["POW"] = std::make_shared<PowerCommand>();
+    this->commands["NUMBER"] = std::make_shared<NumberCommand>();
 }
 
-const std::shared_ptr<Command> CommandManager::get_command(const std::string &token_name) const {
-    std::shared_ptr<Command> command(nullptr);
+const command_ptr CommandManager::get_command(const std::string &token_name) const {
+    command_ptr command(nullptr);
 
     if (this->has_command(token_name)) {
         command = this->commands.at(token_name);

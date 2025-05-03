@@ -17,13 +17,13 @@ Lexer::Lexer() {
     // Functions
 }
 
-std::vector<Token> Lexer::tokenize(const std::string &expression) {
-    std::vector<Token> tokens;
+std::vector<token_ptr> Lexer::tokenize(const std::string &expression) {
     LexerContext lexer_context;
 
     for (auto c : expression) {
         lexer_context.handle_char(c);
     }
+    lexer_context.handle_char('\0');
 
-    return tokens;
+    return lexer_context.get_tokens();
 }

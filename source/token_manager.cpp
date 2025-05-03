@@ -18,10 +18,8 @@ bool TokenManager::function_has_token(const std::string &name) const {
 
 bool TokenManager::operator_has_token(char name) const {
     // Convert char to string
-    std::string op_name;
-    op_name += name;
-
-    return (this->function_tokens.find(op_name) != this->function_tokens.end());
+    std::string op_name(1, name);
+    return (this->operator_tokens.find(op_name) != this->operator_tokens.end());
 }
 
 const std::shared_ptr<Token> TokenManager::get_token(const std::string &name) const {
@@ -30,8 +28,8 @@ const std::shared_ptr<Token> TokenManager::get_token(const std::string &name) co
     if (this->operator_has_token(name.at(0))) {
         token_ptr = this->operator_tokens.at(name);
     }
-
-    else if (this->function_has_token(name)) {
+    
+    if (this->function_has_token(name)) {
         token_ptr = this->function_tokens.at(name);
     }
 

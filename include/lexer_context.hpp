@@ -21,9 +21,13 @@ public:
 
     std::string get_buffer() const;
 
+    void clear_buffer();
+
     void handle_char(char c);
 
     void append_buffer(char c);
 
     void append_token(token_ptr token);
+
+    void set_state(state_ptr new_state);
 };

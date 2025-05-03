@@ -1,22 +1,28 @@
 cmake_minimum_required(VERSION 3.10)
 project(prog LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Equivalent to Makefile's -Wall
-add_compile_options(-Wall)
+# Настройки для отладки
+set(CMAKE_BUILD_TYPE Debug)  # Автоматически добавляет -g для GCC
+add_compile_options(-Wall -ggdb)  # -ggdb для расширенной информации GDB
 
-
-# Explicit source list matching Makefile's SRC
 set(SOURCES
     source/tokens.cpp
+    source/calculator.cpp
+    source/command_manager.cpp
+    source/commands.cpp
+    source/lexer_context.cpp
+    source/lexer.cpp
+    source/token_manager.cpp
+    source/cleaner.cpp
+    source/states.cpp
+    tests/first.cpp
 )
 
-# Create executable (matches Makefile's TARGET)
 add_executable(prog.out ${SOURCES})
 
-# Equivalent to Makefile's -Iinclude
 target_include_directories(prog.out PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )

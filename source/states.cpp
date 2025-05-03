@@ -50,6 +50,10 @@ void StartState::handle_char(LexerContext &context, char c) {
     new_state->handle_char(context, c);
 }
 
+void StartState::emit_token_from_buffer(LexerContext &context) {
+
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////
 
 void NumberState::handle_char(LexerContext &context, char c) {
@@ -91,14 +95,14 @@ void NumberState::handle_char(LexerContext &context, char c) {
             new_state = std::make_shared<LeftParanthesisState>();
             // Should also add multiplication token
             // 2(2 + 2) <=> 2 * (2 + 2)
-            context.append_token(std::make_shared<Token>(OperatorMultiplication()));
+            context.append_token(std::make_shared<OperatorMultiplication>());
         }
     
         if (std::isalpha(c)) {
             new_state = std::make_shared<IdentifierState>();
             // Should also add multiplication token
             // 2sin(pi/2) <=> 2 * sin(pi/2)
-            context.append_token(std::make_shared<Token>(OperatorMultiplication()));
+            context.append_token(std::make_shared<OperatorMultiplication>());
         }
 
         if (c == '\0') {
@@ -109,8 +113,7 @@ void NumberState::handle_char(LexerContext &context, char c) {
             new_state = std::make_shared<StartState>();
         }
     }
-    
-    new_state->handle_char(context, c);
+    context.set_state(new_state);
 }
 
 void NumberState::emit_token_from_buffer(LexerContext &context) {
@@ -125,6 +128,8 @@ void NumberState::emit_token_from_buffer(LexerContext &context) {
 
     // Append the created token to context
     context.append_token(number_token);
+
+    context.clear_buffer();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -178,7 +183,7 @@ void OperatorState::handle_char(LexerContext &context, char c) {
         }
     }
 
-    new_state->handle_char(context, c);
+    context.set_state(new_state);
 }
 
 void OperatorState::emit_token_from_buffer(LexerContext &context) {
@@ -192,10 +197,12 @@ void OperatorState::emit_token_from_buffer(LexerContext &context) {
     TokenManager token_manager;
 
     // Create new operator token
-    auto number_token = std::make_shared<Token>(token_manager.get_token(op_name));
+    auto number_token = token_manager.get_token(op_name);
 
     // Append the created token to context
     context.append_token(number_token);
+
+    context.clear_buffer();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -235,10 +242,62 @@ void UnaryMinusState::handle_char(LexerContext &context, char c) {
         }
     }
 
-    new_state->handle_char(context, c);
+    context.set_state(new_state);
 }
 
 void UnaryMinusState::emit_token_from_buffer(LexerContext &context) {
-    context.append_token(std::make_shared<Token>(Number(-1)));
-    context.append_token(std::make_shared<Token>(OperatorMultiplication()));
+    context.append_token(std::make_shared<Number>(-1));
+    context.append_token(std::make_shared<OperatorMultiplication>());
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+void IdentifierState::handle_char(LexerContext &context, char c) {
+
+}
+
+void IdentifierState::emit_token_from_buffer(LexerContext &context) {
+
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+void LeftParanthesisState::handle_char(LexerContext &context, char c) {
+
+}
+
+void LeftParanthesisState::emit_token_from_buffer(LexerContext &context) {
+    
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+void RightParanthesisState::handle_char(LexerContext &context, char c) {
+
+}
+
+void RightParanthesisState::emit_token_from_buffer(LexerContext &context) {
+    
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+void CommaState::handle_char(LexerContext &context, char c) {
+
+}
+
+void CommaState::emit_token_from_buffer(LexerContext &context) {
+    
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+void EndState::handle_char(LexerContext &context, char c) {
+    context.set_state(std::make_shared<StartState>());
+}
+
+void EndState::emit_token_from_buffer(LexerContext &context) {
+    
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////

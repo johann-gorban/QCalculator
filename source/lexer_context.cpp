@@ -9,6 +9,14 @@ void LexerContext::append_token(token_ptr token) {
     this->tokens.push_back(token);
 }
 
+void LexerContext::set_state(state_ptr new_state) {
+    this->start_state = new_state;
+}
+
+void LexerContext::clear_buffer() {
+    this->buffer.clear();
+}
+
 void LexerContext::append_buffer(char c) {
     this->buffer += c;
 }

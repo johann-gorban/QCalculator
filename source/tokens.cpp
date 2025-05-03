@@ -3,10 +3,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void Token::set_name(const std::string &name) {
-    this->name = name;
-}
-
 const std::string &Token::get_name() const {
     return this->name;
 }
@@ -35,31 +31,31 @@ void Operator::set_precedance(unsigned int precedance) {
 //////////////////////////////////////////////////////////////////////////////////////////
 
 OperatorAddition::OperatorAddition() {
-    this->set_name("ADD");
+    this->name = "ADD";
     this->set_associativity(OperatorAssociativity::LEFT);
     this->set_precedance(2);
 }
 
 OperatorSubstraction::OperatorSubstraction() {
-    this->set_name("SUB");
+    this->name = "SUB";
     this->set_associativity(OperatorAssociativity::LEFT);
     this->set_precedance(2);
 }
 
 OperatorMultiplication::OperatorMultiplication() {
-    this->set_name("MUL");
+    this->name = "MUL";
     this->set_associativity(OperatorAssociativity::LEFT);
     this->set_precedance(3);
 }
 
 OperatorDivision::OperatorDivision() {
-    this->set_name("DIV");
+    this->name = "DIV";
     this->set_associativity(OperatorAssociativity::LEFT);
     this->set_precedance(3);
 }
 
 OperatorPower::OperatorPower() {
-    this->set_name("POW");
+    this->name = "POW";
     this->set_associativity(OperatorAssociativity::LEFT);
     this->set_precedance(5);
 }
@@ -68,7 +64,7 @@ OperatorPower::OperatorPower() {
 //////////////////////////////////////////////////////////////////////////////////////////
 
 Number::Number(const double value) : value(value) {
-    this->set_name(std::to_string(value));
+    this->name = "NUMBER";
 };
 
 double Number::get_value() const {
@@ -79,9 +75,9 @@ double Number::get_value() const {
 //////////////////////////////////////////////////////////////////////////////////////////
 
 LeftParanthesis::LeftParanthesis() {
-    this->set_name("LEFT_PARANTHESIS");
+    this->name = "LEFT_PARANTHESIS";
 }
 
 RightParanthesis::RightParanthesis() {
-    this->set_name("RIGHT_PARANTHESIS");
+    this->name = "RIGHT_PARANTHESIS";
 }

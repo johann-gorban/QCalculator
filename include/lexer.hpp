@@ -13,7 +13,7 @@ private:
 public:
     Lexer();
 
-    std::vector<Token> tokenize(const std::string &expression);
+    std::vector<token_ptr> tokenize(const std::string &expression);
 
     ~Lexer() = default;
 };

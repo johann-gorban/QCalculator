@@ -8,12 +8,12 @@
 
 class TokenManager {
 private:
-    static std::unordered_map<std::string, std::shared_ptr<Operator>> operator_tokens;
-    static std::unordered_map<std::string, std::shared_ptr<Function>> function_tokens;
+    std::unordered_map<std::string, std::shared_ptr<Operator>> operator_tokens;
+    std::unordered_map<std::string, std::shared_ptr<Function>> function_tokens;
 public:
     TokenManager();
 
-    const std::shared_ptr<Token> get_token(const std::string &name) const;
+    const token_ptr get_token(const std::string &name) const;
 
     bool function_has_token(const std::string &name) const;
 
