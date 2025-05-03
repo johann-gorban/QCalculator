@@ -13,7 +13,6 @@ Lexer::Lexer() {
     this->token_keys["*"] = std::make_shared<OperatorMultiplication>();
     this->token_keys["/"] = std::make_shared<OperatorDivision>();
     this->token_keys["^"] = std::make_shared<OperatorPower>();
-    this->token_keys["~"] = std::make_shared<OperatorMinus>();
     
     // Functions
 }
