@@ -12,7 +12,7 @@ typedef std::shared_ptr<State> state_ptr;
 class LexerContext {
 private:
     std::vector<token_ptr> tokens;
-    state_ptr current_state;
+    state_ptr start_state;
     std::string buffer;
 public:
     LexerContext();
@@ -26,6 +26,4 @@ public:
     void append_buffer(char c);
 
     void append_token(token_ptr token);
-
-    void set_state(state_ptr new_state);
 };

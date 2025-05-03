@@ -2,15 +2,11 @@
 
 
 LexerContext::LexerContext() {
-    this->current_state = std::make_shared<StartState>();
+    this->start_state = std::make_shared<StartState>();
 }
 
 void LexerContext::append_token(token_ptr token) {
     this->tokens.push_back(token);
-}
-
-void LexerContext::set_state(state_ptr new_state) {
-    this->current_state = new_state;
 }
 
 void LexerContext::append_buffer(char c) {
@@ -18,7 +14,7 @@ void LexerContext::append_buffer(char c) {
 }
 
 void LexerContext::handle_char(char c) {
-    this->current_state->handle_char(*this, c);
+    this->start_state->handle_char(*this, c);
 }
 
 std::string LexerContext::get_buffer() const {
