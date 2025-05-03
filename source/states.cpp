@@ -47,7 +47,7 @@ void StartState::handle_char(LexerContext &context, char c) {
         }
     }
 
-    context.set_state(new_state);
+    new_state->handle_char(context, c);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -91,16 +91,22 @@ void NumberState::handle_char(LexerContext &context, char c) {
             new_state = std::make_shared<LeftParanthesisState>();
             // Should also add multiplication token
             // 2(2 + 2) <=> 2 * (2 + 2)
+            context.append_token(std::make_shared<Token>(OperatorMultiplication()));
         }
     
         if (std::isalpha(c)) {
             new_state = std::make_shared<IdentifierState>();
             // Should also add multiplication token
             // 2sin(pi/2) <=> 2 * sin(pi/2)
+            context.append_token(std::make_shared<Token>(OperatorMultiplication()));
+        }
+
+        if (c == '\0') {
+            new_state = std::make_shared<EndState>();
         }
     }
     
-    context.set_state(new_state);
+    new_state->handle_char(context, c);
 }
 
 void NumberState::emit_token_from_buffer(LexerContext &context) {
@@ -151,17 +157,20 @@ void OperatorState::handle_char(LexerContext &context, char c) {
         this->emit_token_from_buffer(context);
     }
 
+    else if (c == '\0') {
+        new_state = std::make_shared<EndState>();
+        this->emit_token_from_buffer(context);
+    }
+
     else {
         TokenManager token_manager;
         if (token_manager.operator_has_token(c)) {
             new_state = std::make_shared<OperatorState>();
-
             context.append_buffer(c);
-            this->emit_token_from_buffer(context);
         }
     }
 
-    context.set_state(new_state);
+    new_state->handle_char(context, c);
 }
 
 void OperatorState::emit_token_from_buffer(LexerContext &context) {
@@ -186,4 +195,39 @@ void OperatorState::emit_token_from_buffer(LexerContext &context) {
 void UnaryMinusState::handle_char(LexerContext &context, char c) {
     // Will emit number token for -1 and multiplication token
     // So appending token into context is needed
+    state_ptr new_state = std::make_shared<UnaryMinusState>();
+
+    this->emit_token_from_buffer(context);
+
+    if (std::isdigit(c) || c == '.') {
+        new_state = std::make_shared<NumberState>();
+    }
+    else if (std::isalpha(c)) {
+        new_state = std::make_shared<IdentifierState>();
+    }
+    else if (c == ')') {
+        new_state = std::make_shared<RightParanthesisState>();
+    }
+    else if (c == '(') {
+        new_state = std::make_shared<LeftParanthesisState>();
+    }
+    else if (c == ',') {
+        new_state = std::make_shared<CommaState>();
+    }
+    else if (c == '\0') {
+        new_state = std::make_shared<EndState>();
+    }
+    else {
+        TokenManager token_manager;
+        if (token_manager.operator_has_token(c)) {
+            new_state = std::make_shared<OperatorState>();
+        }
+    }
+
+    new_state->handle_char(context, c);
+}
+
+void UnaryMinusState::emit_token_from_buffer(LexerContext &context) {
+    context.append_token(std::make_shared<Token>(Number(-1)));
+    context.append_token(std::make_shared<Token>(OperatorMultiplication()));
 }
