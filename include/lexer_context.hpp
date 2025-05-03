@@ -6,24 +6,26 @@
 
 #include "states.hpp"
 
+typedef std::shared_ptr<Token> token_ptr;
+typedef std::shared_ptr<State> state_ptr;
 
 class LexerContext {
 private:
-    std::vector<std::shared_ptr<Token>> tokens;
-    std::unique_ptr<State> current_state;
+    std::vector<token_ptr> tokens;
+    state_ptr current_state;
     std::string buffer;
 public:
-    explicit LexerContext(std::unique_ptr<State> start_state);
+    LexerContext();
 
-    std::vector<std::shared_ptr<Token>> get_tokens() const;
+    std::vector<token_ptr> get_tokens() const;
 
-    void set_state(std::unique_ptr<State> new_state);
+    std::string get_buffer() const;
 
-    const std::string &get_buffer() const;
-
-    void emit_token(std::shared_ptr<Token> token);
+    void handle_char(char c);
 
     void append_buffer(char c);
 
-    void finish();
+    void append_token(token_ptr token);
+
+    void set_state(state_ptr new_state);
 };
