@@ -1,5 +1,5 @@
 #include "lexer.hpp"
-
+#include "lexer_context.hpp"
 
 Lexer::Lexer() {
     // Paranthesis and separator
@@ -20,6 +20,11 @@ Lexer::Lexer() {
 
 std::vector<Token> Lexer::tokenize(const std::string &expression) {
     std::vector<Token> tokens;
-    /*---*/
+    LexerContext lexer_context;
+
+    for (auto c : expression) {
+        lexer_context.handle_char(c);
+    }
+
     return tokens;
 }
