@@ -79,14 +79,6 @@ public:
 };
 
 
-class OperatorMinus : public Operator {
-public:
-    explicit OperatorMinus();
-
-    ~OperatorMinus() = default;
-};
-
-
 class OperatorPower : public Operator {
 public:
     explicit OperatorPower();
