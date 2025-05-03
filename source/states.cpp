@@ -104,6 +104,10 @@ void NumberState::handle_char(LexerContext &context, char c) {
         if (c == '\0') {
             new_state = std::make_shared<EndState>();
         }
+
+        if (c == ' ') {
+            new_state = std::make_shared<StartState>();
+        }
     }
     
     new_state->handle_char(context, c);
@@ -135,6 +139,10 @@ void OperatorState::handle_char(LexerContext &context, char c) {
     else if (std::isdigit(c) || c == '.') {
         new_state = std::make_shared<NumberState>();
         this->emit_token_from_buffer(context);
+    }
+
+    else if (c == ' ') {
+        new_state = std::make_shared<StartState>();
     }
 
     else if (std::isalpha(c)) {
@@ -204,6 +212,9 @@ void UnaryMinusState::handle_char(LexerContext &context, char c) {
     }
     else if (std::isalpha(c)) {
         new_state = std::make_shared<IdentifierState>();
+    }
+    else if (c == ' ') {
+        new_state = std::make_shared<StartState>();
     }
     else if (c == ')') {
         new_state = std::make_shared<RightParanthesisState>();
