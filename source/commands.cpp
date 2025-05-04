@@ -1,6 +1,7 @@
 #include "commands.hpp"
 
 #include <stdexcept>
+#include <cmath>
 
 
 void NumberCommand::execute(std::stack<double> &computation_stack, const token_ptr &token) {
@@ -61,7 +62,7 @@ void PowerCommand::execute(std::stack<double> &computation_stack, const token_pt
     computation_stack.pop();
 
     // computation_stack.push(std::pow(a, b));
-    computation_stack.push(a + b);
+    computation_stack.push(std::pow(a, b));
 }
 
 void MinusCommand::execute(std::stack<double> &computation_stack, const token_ptr &token) {
