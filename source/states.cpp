@@ -124,7 +124,7 @@ void NumberState::emit_token_from_buffer(LexerContext &context) {
     double number = std::stod(current_buffer);
     
     // Create new number token
-    auto number_token = std::make_shared<Token>(Number(number));
+    auto number_token = std::make_shared<Number>(number);
 
     // Append the created token to context
     context.append_token(number_token);
