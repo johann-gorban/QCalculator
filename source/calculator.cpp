@@ -9,7 +9,7 @@ double Calculator::calculate(std::vector<std::shared_ptr<Token>> tokens_rpn) {
     CommandManager command_manager;
 
     for (const auto &token: tokens_rpn) {
-        auto command = command_manager.get_command(token->get_name());
+        auto command = command_manager.get_command(token);
         if (command) {
             command->execute(computations, token);
         }

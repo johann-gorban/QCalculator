@@ -14,7 +14,7 @@ private:
 public:
     CommandManager();
 
-    const command_ptr get_command(const std::string &token_name) const;
+    const command_ptr get_command(const token_ptr &token) const;
 
     bool has_command(const std::string &token_name) const;
 };
