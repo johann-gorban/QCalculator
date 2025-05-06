@@ -3,6 +3,10 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
+Token::Token(const std::string &name) {
+    this->name = name;
+}
+
 const std::string &Token::get_name() const {
     return this->name;
 }
@@ -10,7 +14,7 @@ const std::string &Token::get_name() const {
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
-Operator::Operator() {};
+Operator::Operator(const std::string &name) : Token(name) {};
 
 unsigned int Operator::get_precedance() const {
     return this->precedance;
@@ -30,32 +34,27 @@ void Operator::set_precedance(unsigned int precedance) {
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-OperatorAddition::OperatorAddition() {
-    this->name = "ADD";
+OperatorAddition::OperatorAddition() : Operator("ADD") {
     this->set_associativity(OperatorAssociativity::LEFT);
     this->set_precedance(2);
 }
 
-OperatorSubstraction::OperatorSubstraction() {
-    this->name = "SUB";
+OperatorSubstraction::OperatorSubstraction() : Operator("SUB") {
     this->set_associativity(OperatorAssociativity::LEFT);
     this->set_precedance(2);
 }
 
-OperatorMultiplication::OperatorMultiplication() {
-    this->name = "MUL";
+OperatorMultiplication::OperatorMultiplication() : Operator("MUL") {
     this->set_associativity(OperatorAssociativity::LEFT);
     this->set_precedance(3);
 }
 
-OperatorDivision::OperatorDivision() {
-    this->name = "DIV";
+OperatorDivision::OperatorDivision() : Operator("DIV") {
     this->set_associativity(OperatorAssociativity::LEFT);
     this->set_precedance(3);
 }
 
-OperatorPower::OperatorPower() {
-    this->name = "POW";
+OperatorPower::OperatorPower() : Operator("POW") {
     this->set_associativity(OperatorAssociativity::LEFT);
     this->set_precedance(5);
 }
@@ -63,9 +62,7 @@ OperatorPower::OperatorPower() {
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
-Number::Number(const double value) : value(value) {
-    this->name = "NUMBER";
-};
+Number::Number(const double value) : Token("NUMBER"), value(value) {};
 
 double Number::get_value() const {
     return this->value;
@@ -74,10 +71,6 @@ double Number::get_value() const {
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
-LeftParanthesis::LeftParanthesis() {
-    this->name = "LEFT_PARANTHESIS";
-}
+LeftParanthesis::LeftParanthesis() : Token("LEFT_PARANTHESIS") {}
 
-RightParanthesis::RightParanthesis() {
-    this->name = "RIGHT_PARANTHESIS";
-}
+RightParanthesis::RightParanthesis() : Token("RIGHT_PARANTHESIS") {}

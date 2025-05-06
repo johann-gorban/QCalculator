@@ -19,6 +19,8 @@ class Token {
 protected:
     std::string name;
 public:
+    Token(const std::string &name);
+
     const std::string &get_name() const;
 
     virtual ~Token() = default;
@@ -36,7 +38,7 @@ public:
 
     void set_associativity(OperatorAssociativity associativity);
 public:
-    Operator();
+    Operator(const std::string &name);
 
     unsigned int get_precedance() const;
 
@@ -120,18 +122,14 @@ class Separator : public Token {
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
-class Paranthesis : public Token {
 
-};
-
-
-class LeftParanthesis : public Paranthesis {
+class LeftParanthesis : public Token {
 public:
     LeftParanthesis();
 };
 
 
-class RightParanthesis : public Paranthesis {
+class RightParanthesis : public Token {
 public:
     RightParanthesis();
 };
