@@ -9,16 +9,12 @@ set(CMAKE_BUILD_TYPE Debug)  # Автоматически добавляет -g 
 add_compile_options(-Wall -ggdb)  # -ggdb для расширенной информации GDB
 
 set(SOURCES
-    source/tokens.cpp
-    source/calculator.cpp
-    source/command_manager.cpp
-    source/commands.cpp
-    source/lexer_context.cpp
-    source/lexer.cpp
-    source/token_manager.cpp
-    source/cleaner.cpp
-    source/states.cpp
-    tests/first.cpp
+    source/tokenization/context.cpp
+    source/tokenization/manager.cpp
+    source/tokenization/tokenizer.cpp
+    source/tokenization/tokens.cpp
+    source/tokenization/states.cpp
+    tests/tokenization.cpp
 )
 
 add_executable(prog.out ${SOURCES})
