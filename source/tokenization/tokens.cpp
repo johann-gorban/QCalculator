@@ -1,6 +1,6 @@
 #include "tokenization/tokens.hpp"
 
-Token::Token(const std::string &name, const token_type &type) : data(data), type(type) {
+Token::Token(const std::string &name, const token_type &type) noexcept : data(name), type(type) {
 
 }
 

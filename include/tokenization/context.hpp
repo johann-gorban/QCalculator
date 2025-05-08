@@ -7,6 +7,9 @@
 #include "tokens.hpp"
 #include "manager.hpp"
 
+class State;
+
+using state_ptr = std::shared_ptr<State>;
 
 class TokenizerContext {
 private:

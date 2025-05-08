@@ -14,6 +14,8 @@ typedef enum {
     SEPARATOR
 } token_type;
 
+class Token;
+
 using token_ptr = std::shared_ptr<Token>;
 
 class Token {

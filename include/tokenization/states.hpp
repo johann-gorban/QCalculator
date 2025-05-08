@@ -4,8 +4,7 @@
 
 #include "context.hpp"
 
-
-using state_ptr = std::shared_ptr<State>;
+class TokenizerContext;
 
 class State {
 public:
