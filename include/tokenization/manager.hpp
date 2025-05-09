@@ -12,7 +12,7 @@ private:
 public:
     TokenManager();
 
-    bool is_available(const std::string &name) const noexcept;
+    bool is_valid_name(const std::string &name) const noexcept;
 
     const std::string &get_name(const std::string &name) const;
 

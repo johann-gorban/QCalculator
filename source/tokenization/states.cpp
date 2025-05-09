@@ -112,7 +112,7 @@ void OperatorState::handle_char(TokenizerContext &context, char c) {
     state_ptr new_state = std::make_shared<OperatorState>();
     TokenManager token_manager = context.get_manager();
 
-    if (token_manager.is_token_available(std::string(1, c))) {
+    if (token_manager.is_valid_name(std::string(1, c))) {
         new_state = std::make_shared<OperatorState>();
         context.append_buffer(c);
     }
@@ -150,7 +150,7 @@ void OperatorState::emit_token_from_buffer(TokenizerContext &context) {
     // Create token manager to define operator we got
     auto token_manager = context.get_manager();
 
-    if (!token_manager.is_token_available(current_buffer)) {
+    if (!token_manager.is_valid_name(current_buffer)) {
         throw std::runtime_error("Lexical error: no operators with such syntax");
     }
     else {
@@ -166,7 +166,7 @@ void UnaryOperatorState::handle_char(TokenizerContext &context, char c) {
     state_ptr new_state = std::make_shared<UnaryOperatorState>();
 
     auto token_manager = context.get_manager();
-    if (token_manager.is_token_available(std::string(1, c))) {
+    if (token_manager.is_valid_name(std::string(1, c))) {
         context.append_buffer(c);
     }
     else {
@@ -201,7 +201,7 @@ void UnaryOperatorState::emit_token_from_buffer(TokenizerContext &context) {
     auto token_manager = context.get_manager();
     
     std::string op_name = context.get_buffer();
-    if (!token_manager.is_token_available(op_name)) {
+    if (!token_manager.is_valid_name(op_name)) {
         throw std::runtime_error("Lexical error: no unary operators with such syntax");
     }
     else {

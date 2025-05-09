@@ -3,7 +3,7 @@
 #include <stdexcept>
 
 TokenManager::TokenManager() {
-    // Token types
+    // Token types for debugging
     this->token_type_names[token_type::NUMBER] = "NUMBER";
     this->token_type_names[token_type::FUNCTION] = "FUNCTION";
     this->token_type_names[token_type::BINARY_OPERATOR] = "BINARY_OPERATOR";
@@ -24,12 +24,12 @@ TokenManager::TokenManager() {
     // ...
 }
 
-bool TokenManager::is_available(const std::string &name) const noexcept {
+bool TokenManager::is_valid_name(const std::string &name) const noexcept {
     return (this->available_tokens.count(name) == 0) ? false : true;
 }
 
 const std::string &TokenManager::get_name(const std::string &name) const {
-    if (this->is_available(name)) {
+    if (this->is_valid_name(name)) {
         return this->available_tokens.at(name);
     }
     else {
