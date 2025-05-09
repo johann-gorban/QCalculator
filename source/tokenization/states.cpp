@@ -23,12 +23,8 @@ void StartState::handle_char(TokenizerContext &context, char c) {
     else if (std::isalpha(c)) {
         new_state = std::make_shared<IdentifierState>();
     }
-    else if (c == '(') {
-        new_state = std::make_shared<LeftParanthesisState>();
-    }
-
-    else if (c == ')') {
-        new_state = std::make_shared<RightParanthesisState>();
+    else if (c == '(' || c == ')') {
+        new_state = std::make_shared<ParanthesisState>();
     }
     else if (c == ',') {
         new_state = std::make_shared<SeparatorState>();
@@ -73,10 +69,10 @@ void NumberState::handle_char(TokenizerContext &context, char c) {
         context.append_buffer(c);
 
         if (c == ')') {
-            new_state = std::make_shared<RightParanthesisState>();
+            new_state = std::make_shared<ParanthesisState>();
         }
         else if (c == '(') {
-            new_state = std::make_shared<LeftParanthesisState>();
+            new_state = std::make_shared<ParanthesisState>();
             // Should also add multiplication token
             // 2(2 + 2) <=> 2 * (2 + 2)
             context.append_token(std::make_shared<Token>("MUL", token_type::BINARY_OPERATOR));
@@ -116,7 +112,7 @@ void OperatorState::handle_char(TokenizerContext &context, char c) {
     state_ptr new_state = std::make_shared<OperatorState>();
     TokenManager token_manager = context.get_manager();
 
-    if (token_manager.is_available(std::string(1, c))) {
+    if (token_manager.is_token_available(std::string(1, c))) {
         new_state = std::make_shared<OperatorState>();
         context.append_buffer(c);
     }
@@ -131,10 +127,10 @@ void OperatorState::handle_char(TokenizerContext &context, char c) {
             new_state = std::make_shared<IdentifierState>();
         }
         else if (c == ')') {
-            new_state = std::make_shared<LeftParanthesisState>();
+            new_state = std::make_shared<ParanthesisState>();
         }
         else if (c == '(') {
-            new_state = std::make_shared<RightParanthesisState>();
+            new_state = std::make_shared<ParanthesisState>();
         }
         else if (c == ',') {
             new_state = std::make_shared<SeparatorState>();
@@ -154,7 +150,7 @@ void OperatorState::emit_token_from_buffer(TokenizerContext &context) {
     // Create token manager to define operator we got
     auto token_manager = context.get_manager();
 
-    if (!token_manager.is_available(current_buffer)) {
+    if (!token_manager.is_token_available(current_buffer)) {
         throw std::runtime_error("Lexical error: no operators with such syntax");
     }
     else {
@@ -170,8 +166,7 @@ void UnaryOperatorState::handle_char(TokenizerContext &context, char c) {
     state_ptr new_state = std::make_shared<UnaryOperatorState>();
 
     auto token_manager = context.get_manager();
-    if (token_manager.is_available(std::string(1, c))) {
-        new_state = std::make_shared<UnaryOperatorState>();
+    if (token_manager.is_token_available(std::string(1, c))) {
         context.append_buffer(c);
     }
     else {
@@ -185,10 +180,10 @@ void UnaryOperatorState::handle_char(TokenizerContext &context, char c) {
             new_state = std::make_shared<IdentifierState>();
         }
         else if (c == ')') {
-            new_state = std::make_shared<RightParanthesisState>();
+            new_state = std::make_shared<ParanthesisState>();
         }
         else if (c == '(') {
-            new_state = std::make_shared<LeftParanthesisState>();
+            new_state = std::make_shared<ParanthesisState>();
         }
         else if (c == ',') {
             new_state = std::make_shared<SeparatorState>();
@@ -206,7 +201,7 @@ void UnaryOperatorState::emit_token_from_buffer(TokenizerContext &context) {
     auto token_manager = context.get_manager();
     
     std::string op_name = context.get_buffer();
-    if (!token_manager.is_available(op_name)) {
+    if (!token_manager.is_token_available(op_name)) {
         throw std::runtime_error("Lexical error: no unary operators with such syntax");
     }
     else {
@@ -228,32 +223,81 @@ void IdentifierState::emit_token_from_buffer(TokenizerContext &context) {
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void LeftParanthesisState::handle_char(TokenizerContext &context, char c) {
+void ParanthesisState::handle_char(TokenizerContext &context, char c) {
+    state_ptr new_state = std::make_shared<ParanthesisState>();
 
+    if (c != '(' && c != ')') {
+        this->emit_token_from_buffer(context);
+    }
+
+    context.append_buffer(c);
+
+    if (std::isdigit(c) || c == '.') {
+        new_state = std::make_shared<NumberState>();
+    }
+    else if (std::isalpha(c)) {
+        new_state = std::make_shared<IdentifierState>();
+    }
+    else if (c == ',') {
+        new_state = std::make_shared<SeparatorState>();
+    }
+    else if (c == '\0') {
+        new_state = std::make_shared<EndState>();
+    }
+
+    context.set_state(new_state);
 }
 
-void LeftParanthesisState::emit_token_from_buffer(TokenizerContext &context) {
-    
-}
+void ParanthesisState::emit_token_from_buffer(TokenizerContext &context) {
+    std::string current_buffer = context.get_buffer();
 
-//////////////////////////////////////////////////////////////////////////////////////////
-
-void RightParanthesisState::handle_char(TokenizerContext &context, char c) {
-
-}
-
-void RightParanthesisState::emit_token_from_buffer(TokenizerContext &context) {
-    
+    if (current_buffer == "(") {
+        context.append_token(std::make_shared<Token>("", token_type::LEFT_PARANTHESIS));
+        context.clear_buffer();
+    }
+    else if (current_buffer == ")") {
+        context.append_token(std::make_shared<Token>("", token_type::RIGHT_PARANTHESIS));
+        context.clear_buffer();
+    }
+    else {
+        throw std::runtime_error("Lexical error: no such paranthesis");
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
 void SeparatorState::handle_char(TokenizerContext &context, char c) {
+    state_ptr new_state = std::make_shared<SeparatorState>();
 
+    if (c != ',') {
+        this->emit_token_from_buffer(context);
+    }
+
+    context.append_buffer(c);
+    if (std::isdigit(c) || c == '.') {
+        new_state = std::make_shared<NumberState>();
+    }
+    else if (std::isalpha(c)) {
+        new_state = std::make_shared<IdentifierState>();
+    }
+    else if (c == '(' || c == ')') {
+        new_state = std::make_shared<ParanthesisState>();
+    }
+    else if (c == '\0') {
+        new_state = std::make_shared<EndState>();
+    }
 }
 
 void SeparatorState::emit_token_from_buffer(TokenizerContext &context) {
-    
+    std::string current_buffer = context.get_buffer();
+
+    if (current_buffer != ",") {
+        throw std::runtime_error("Lexical error: no such separator"); 
+    }
+    else {
+        context.append_token(std::make_shared<Token>("", token_type::SEPARATOR));
+        context.clear_buffer();
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
