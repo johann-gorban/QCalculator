@@ -14,6 +14,7 @@ set(SOURCES
     source/tokenization/tokenizer.cpp
     source/tokenization/tokens.cpp
     source/tokenization/states.cpp
+    source/tokenization/state_factory.cpp
     tests/tokenization.cpp
 )
 

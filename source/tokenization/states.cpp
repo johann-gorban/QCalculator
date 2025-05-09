@@ -2,6 +2,7 @@
 #include "tokenization/context.hpp"
 #include "tokenization/tokens.hpp"
 #include "tokenization/manager.hpp"
+#include "tokenization/state_factory.hpp"
 
 #include <memory>
 #include <algorithm>
@@ -15,23 +16,13 @@ void State::emit_token_from_buffer(TokenizerContext &context) {
 //////////////////////////////////////////////////////////////////////////////////////////
 
 void StartState::handle_char(TokenizerContext &context, char c) {
-    state_ptr new_state;
-
     context.append_buffer(c);
 
-    if (std::isdigit(c) || c == '.') {
-        new_state = std::make_shared<NumberState>();
-    }
-    else if (std::isalpha(c)) {
-        new_state = std::make_shared<IdentifierState>();
-    }
-    else if (c == '(' || c == ')') {
-        new_state = std::make_shared<ParanthesisState>();
-    }
-    else if (c == ',') {
-        new_state = std::make_shared<SeparatorState>();
-    }
-    else {
+    static StateFactory state_factory;
+    state_ptr new_state = state_factory.create(c);
+
+    TokenManager token_manager;
+    if (token_manager.is_valid_name(std::string(1, c))) {
         new_state = std::make_shared<UnaryOperatorState>();
     }
 
@@ -70,30 +61,8 @@ void NumberState::handle_char(TokenizerContext &context, char c) {
         this->emit_token_from_buffer(context);
         context.append_buffer(c);
 
-        if (c == ')') {
-            new_state = std::make_shared<ParanthesisState>();
-        }
-        else if (c == '(') {
-            new_state = std::make_shared<ParanthesisState>();
-            // Should also add multiplication token
-            // 2(2 + 2) <=> 2 * (2 + 2)
-            context.append_token(std::make_shared<Token>("MUL", token_type::BINARY_OPERATOR));
-        }
-        else if (std::isalpha(c)) {
-            new_state = std::make_shared<IdentifierState>();
-            // Should also add multiplication token
-            // 2sin(pi/2) <=> 2 * sin(pi/2)
-            context.append_token(std::make_shared<Token>("MUL", token_type::BINARY_OPERATOR));
-        }
-        else if (c == '\0') {
-            new_state = std::make_shared<EndState>();
-        }
-        else if (c == ',') {
-            new_state = std::make_shared<SeparatorState>();
-        }
-        else {
-            new_state = std::make_shared<OperatorState>();
-        }
+        static StateFactory state_factory;
+        new_state = state_factory.create(c);
     }
     context.set_state(new_state);
 }
@@ -125,24 +94,8 @@ void OperatorState::handle_char(TokenizerContext &context, char c) {
         this->emit_token_from_buffer(context);
         context.append_buffer(c);
 
-        if (std::isdigit(c) || c == '.') {
-            new_state = std::make_shared<NumberState>();
-        }
-        else if (std::isalpha(c)) {
-            new_state = std::make_shared<IdentifierState>();
-        }
-        else if (c == ')') {
-            new_state = std::make_shared<ParanthesisState>();
-        }
-        else if (c == '(') {
-            new_state = std::make_shared<ParanthesisState>();
-        }
-        else if (c == ',') {
-            new_state = std::make_shared<SeparatorState>();
-        }
-        else if (c == '\0') {
-            new_state = std::make_shared<EndState>();
-        }
+        static StateFactory state_factory;
+        new_state = state_factory.create(c);
     }
 
     context.set_state(new_state);
@@ -178,24 +131,8 @@ void UnaryOperatorState::handle_char(TokenizerContext &context, char c) {
         this->emit_token_from_buffer(context);
         context.append_buffer(c);
 
-        if (std::isdigit(c) || c == '.') {
-            new_state = std::make_shared<NumberState>();
-        }
-        else if (std::isalpha(c)) {
-            new_state = std::make_shared<IdentifierState>();
-        }
-        else if (c == ')') {
-            new_state = std::make_shared<ParanthesisState>();
-        }
-        else if (c == '(') {
-            new_state = std::make_shared<ParanthesisState>();
-        }
-        else if (c == ',') {
-            new_state = std::make_shared<SeparatorState>();
-        }
-        else if (c == '\0') {
-            new_state = std::make_shared<EndState>();
-        }
+        static StateFactory state_factory;
+        new_state = state_factory.create(c);
     }
 
 
@@ -237,20 +174,12 @@ void IdentifierState::handle_char(TokenizerContext &context, char c) {
         this->emit_token_from_buffer(context);
         context.append_buffer(c);
 
-        if (c == '(' || c == ')') {
-            new_state = std::make_shared<ParanthesisState>();
-        }
-        else if (c == '\0') {
-            new_state = std::make_shared<EndState>();
-        }
-        else {
-            throw std::runtime_error("Lexical error: function name cannot have such symbol '" + std::string(1, c) + "'");
-        }
+        static StateFactory state_factory;
+        new_state = state_factory.create(c);
     }
     
     context.set_state(new_state);
 }
-
 
 void IdentifierState::emit_token_from_buffer(TokenizerContext &context) {
     std::string current_buffer = context.get_buffer();
@@ -274,22 +203,14 @@ void ParanthesisState::handle_char(TokenizerContext &context, char c) {
     this->emit_token_from_buffer(context);
     context.append_buffer(c);
 
-    TokenManager token_manager = context.get_manager();
+    static StateFactory state_factory;
+    new_state = state_factory.create(c);
+
+    TokenManager token_manager;
     if (token_manager.is_valid_name(std::string(1, c))) {
-        new_state = std::make_shared<OperatorState>();
+        new_state = std::make_shared<UnaryOperatorState>();
     }
-    else if (std::isdigit(c) || c == '.') {
-        new_state = std::make_shared<NumberState>();
-    }
-    else if (std::isalpha(c)) {
-        new_state = std::make_shared<IdentifierState>();
-    }
-    else if (c == ',') {
-        new_state = std::make_shared<SeparatorState>();
-    }
-    else if (c == '\0') {
-        new_state = std::make_shared<EndState>();
-    }
+
     context.set_state(new_state);
 }
 
@@ -317,22 +238,9 @@ void SeparatorState::handle_char(TokenizerContext &context, char c) {
     this->emit_token_from_buffer(context);
     context.append_buffer(c);
 
-    TokenManager token_manager = context.get_manager();
-    if (token_manager.is_valid_name(std::string(1, c))) {
-        new_state = std::make_shared<OperatorState>();
-    }
-    else if (std::isdigit(c) || c == '.') {
-        new_state = std::make_shared<NumberState>();
-    }
-    else if (std::isalpha(c)) {
-        new_state = std::make_shared<IdentifierState>();
-    }
-    else if (c == '(' || c == ')') {
-        new_state = std::make_shared<ParanthesisState>();
-    }
-    else if (c == '\0') {
-        new_state = std::make_shared<EndState>();
-    }
+    static StateFactory state_factory;
+    new_state = state_factory.create(c);
+
     context.set_state(new_state);
 }
 
