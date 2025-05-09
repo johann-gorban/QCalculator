@@ -13,53 +13,49 @@ public:
     }
 };
 
-
-int main() {
-    Tokenizer tokenizer;
-    std::vector<token_ptr> tokens;
-    // Test 1
-    {
-        tokens = tokenizer.tokenize("+2+3+4+5");
+class Tester {
+private:
+    static long unsigned int test_number;
+public:
+    static void test(const std::string &expression_to_test) {
+        static Tokenizer tokenizer;
+        std::cout << "Test #" << test_number++ << std::endl;
+        std::vector<token_ptr> tokens = tokenizer.tokenize(expression_to_test);
         for (const auto &token : tokens) {
             TokenPrinter::visit(token);
         }
         std::cout << std::endl;
+    }
+};
+
+long unsigned int Tester::test_number = 1;
+
+
+int main() {
+    
+    // Test 1
+    {
+        Tester::test("+2+3+4+5");
     }
 
     // Test 2
     {
-        tokens = tokenizer.tokenize("2*2-2+2");
-        for (const auto &token : tokens) {
-            TokenPrinter::visit(token);
-        }
-        std::cout << std::endl;
+        Tester::test("2*2-2+2");
     }
 
     // Test 3
     {
-        tokens = tokenizer.tokenize("254*22/2");
-        for (const auto &token : tokens) {
-            TokenPrinter::visit(token);
-        }
-        std::cout << std::endl;
+        Tester::test("254*22/2");
     }
 
     // Test 4
     {
-        tokens = tokenizer.tokenize("254(2+3+4)");
-        for (const auto &token : tokens) {
-            TokenPrinter::visit(token);
-        }
-        std::cout << std::endl;
+        Tester::test("254(2+3+4)");
     }
 
     // Test 5
     {
-        tokens = tokenizer.tokenize("254(2.4+3+4)");
-        for (const auto &token : tokens) {
-            TokenPrinter::visit(token);
-        }
-        std::cout << std::endl;
+        Tester::test("254(2.43643746+3+4)");
     }
 
     return 0;
