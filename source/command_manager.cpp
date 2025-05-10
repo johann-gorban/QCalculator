@@ -2,26 +2,41 @@
 
 
 CommandManager::CommandManager() {
-    this->commands["ADD"] = std::make_shared<AdditionCommand>();
-    this->commands["SUB"] = std::make_shared<SubstractCommand>();
-    this->commands["MUL"] = std::make_shared<MultiplyCommand>();
-    this->commands["DIV"] = std::make_shared<DivisionCommand>();
-    this->commands["POW"] = std::make_shared<PowerCommand>();
-    this->commands["NUMBER"] = std::make_shared<NumberCommand>();
+    this->binary_operators["+"] = std::make_shared<AdditionCommand>();
+    this->binary_operators["-"] = std::make_shared<SubstractCommand>();
+    this->binary_operators["*"] = std::make_shared<MultiplyCommand>();
+    this->binary_operators["/"] = std::make_shared<DivisionCommand>();
+    this->binary_operators["^"] = std::make_shared<PowerCommand>();
+
+    // this->functions["sin"] = std::make_shared<SinCommand>();
+    // this->unary_operators["-"] = std::make_shared<UnaryMinusCommand>();
 }
 
 const command_ptr CommandManager::get_command(const token_ptr &token) const {
     command_ptr command(nullptr);
+    
+    TokenType token_type = token->get_type();
+    if (token_type == TokenType::Number) {
+        command = std::make_shared<NumberCommand>();
+    }
+    else {
+        std::string token_name = token->get_data();
 
-    std::string token_name = token->get_name();
-
-    if (this->has_command(token_name)) {
-        command = this->commands.at(token_name);
+        if (token_type == TokenType::Function) {
+            command = this->functions.at(token_name);
+        }
+        else if (token_type == TokenType::Operator) {
+            auto operator_token = std::dynamic_pointer_cast<OperatorToken>(token);
+            Arity token_arity = operator_token->get_arity();
+            
+            if (token_arity == Arity::Binary) {
+                command = this->binary_operators.at(token_name);
+            }
+            else if (token_arity == Arity::Unary) {
+                command = this->unary_operators.at(token_name);
+            }
+        }
     }
     
     return command;
-}
-
-bool CommandManager::has_command(const std::string &token_name) const {
-    return (commands.find(token_name) != commands.end());
 }
