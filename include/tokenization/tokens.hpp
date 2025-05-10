@@ -5,12 +5,10 @@
 
 // Possible types of token
 enum class TokenType {
-    BinaryOperator,
-    UnaryOperator,
+    Operator,
     Function,
     Number,
-    LeftParenthesis,
-    RightParenthesis,
+    Parenthesis,
     Separator
 };
 
