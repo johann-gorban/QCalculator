@@ -16,6 +16,14 @@ Arity OperatorToken::get_arity() const noexcept {
     return this->arity;
 }
 
+unsigned int OperatorToken::get_precedance() const noexcept {
+    return this->precedance;
+}
+
+Associativity OperatorToken::get_associativity() const noexcept {
+    return this->associativity;
+}
+
 // FunctionToken
 FunctionToken::FunctionToken(const Token& token) noexcept : Token(token) {
 
