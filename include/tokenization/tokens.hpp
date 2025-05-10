@@ -4,15 +4,15 @@
 #include <string>
 
 // Possible types of token
-typedef enum {
-    BINARY_OPERATOR,
-    UNARY_OPERATOR,
-    FUNCTION,
-    NUMBER,
-    LEFT_PARANTHESIS,
-    RIGHT_PARANTHESIS,
-    SEPARATOR
-} token_type;
+enum class TokenType {
+    BinaryOperator,
+    UnaryOperator,
+    Function,
+    Number,
+    LeftParenthesis,
+    RightParenthesis,
+    Separator
+};
 
 class Token;
 
@@ -21,11 +21,11 @@ using token_ptr = std::shared_ptr<Token>;
 class Token {
 private:
     const std::string data;
-    const token_type type;
+    const TokenType type;
 public:
-    explicit Token(const std::string &name, const token_type &type) noexcept;
+    explicit Token(const std::string &name, const TokenType &type) noexcept;
 
     const std::string &get_data() const noexcept;
 
-    const token_type get_type() const noexcept;
+    const TokenType get_type() const noexcept;
 };

@@ -72,7 +72,7 @@ void NumberState::emit_token_from_buffer(TokenizerContext &context) {
     auto current_buffer = context.get_buffer();
     
     // Create new number token
-    auto number_token = std::make_shared<Token>(current_buffer, token_type::NUMBER);
+    auto number_token = std::make_shared<Token>(current_buffer, TokenType::Number);
 
     // Append the created token to context
     context.append_token(number_token);
@@ -113,7 +113,7 @@ void OperatorState::emit_token_from_buffer(TokenizerContext &context) {
     }
     else {
         const std::string token_name = token_manager.get_name(current_buffer);
-        context.append_token(std::make_shared<Token>(token_name, token_type::BINARY_OPERATOR));
+        context.append_token(std::make_shared<Token>(token_name, TokenType::BinaryOperator));
         context.clear_buffer();
     }
 }
@@ -148,7 +148,7 @@ void UnaryOperatorState::emit_token_from_buffer(TokenizerContext &context) {
     }
     else {
         std::string token_name = token_manager.get_name(op_name);
-        context.append_token(std::make_shared<Token>(token_name, token_type::UNARY_OPERATOR));
+        context.append_token(std::make_shared<Token>(token_name, TokenType::UnaryOperator));
         context.clear_buffer();
     }
 }
@@ -187,7 +187,7 @@ void IdentifierState::emit_token_from_buffer(TokenizerContext &context) {
     TokenManager token_manager = context.get_manager();
 
     if (token_manager.is_valid_name(current_buffer)) {
-        context.append_token(std::make_shared<Token>(token_manager.get_name(current_buffer), token_type::FUNCTION));
+        context.append_token(std::make_shared<Token>(token_manager.get_name(current_buffer), TokenType::Function));
         context.clear_buffer();
     }
     else {
@@ -218,11 +218,11 @@ void ParanthesisState::emit_token_from_buffer(TokenizerContext &context) {
     std::string current_buffer = context.get_buffer();
 
     if (current_buffer == "(") {
-        context.append_token(std::make_shared<Token>("", token_type::LEFT_PARANTHESIS));
+        context.append_token(std::make_shared<Token>("", TokenType::LeftParenthesis));
         context.clear_buffer();
     }
     else if (current_buffer == ")") {
-        context.append_token(std::make_shared<Token>("", token_type::RIGHT_PARANTHESIS));
+        context.append_token(std::make_shared<Token>("", TokenType::RightParenthesis));
         context.clear_buffer();
     }
     else {
@@ -251,7 +251,7 @@ void SeparatorState::emit_token_from_buffer(TokenizerContext &context) {
         throw std::runtime_error("Lexical error: no such separator: " + current_buffer); 
     }
     else {
-        context.append_token(std::make_shared<Token>("", token_type::SEPARATOR));
+        context.append_token(std::make_shared<Token>("", TokenType::Separator));
         context.clear_buffer();
     }
 }
