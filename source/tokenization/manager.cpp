@@ -4,13 +4,13 @@
 
 TokenManager::TokenManager() {
     // Token types for debugging
-    this->TokenType_names[TokenType::NUMBER] = "NUMBER";
-    this->TokenType_names[TokenType::FUNCTION] = "FUNCTION";
-    this->TokenType_names[TokenType::BinaryOperator] = "BinaryOperator";
-    this->TokenType_names[TokenType::UNARY_OPERATOR] = "UNARY_OPERATOR";
-    this->TokenType_names[TokenType::LEFT_PARANTHESIS] = "LEFT_PARANTHESIS";
-    this->TokenType_names[TokenType::RIGHT_PARANTHESIS] = "RIGHT_PARANTHESIS";
-    this->TokenType_names[TokenType::SEPARATOR] = "SEPARATOR";
+    this->tokentype_names[TokenType::Number] = "NUMBER";
+    this->tokentype_names[TokenType::Function] = "FUNCTION";
+    this->tokentype_names[TokenType::BinaryOperator] = "BINARY_OPERATOR";
+    this->tokentype_names[TokenType::UnaryOperator] = "UNARY_OPERATOR";
+    this->tokentype_names[TokenType::LeftParenthesis] = "LEFT_PARENTHESIS";
+    this->tokentype_names[TokenType::RightParenthesis] = "RIGHT_PARENTHESIS";
+    this->tokentype_names[TokenType::Separator] = "SEPARATOR";
 
     // Operators
     this->available_tokens["-"] = "SUB";
@@ -38,8 +38,8 @@ const std::string &TokenManager::get_name(const std::string &name) const {
 }
 
 const std::string &TokenManager::get_type_name(TokenType type) const {
-    if (this->TokenType_names.count(type) != 0) {
-        return this->TokenType_names.at(type);
+    if (this->tokentype_names.count(type) != 0) {
+        return this->tokentype_names.at(type);
     }
     else {
         throw std::runtime_error("Token type error: no tokens type with such index");

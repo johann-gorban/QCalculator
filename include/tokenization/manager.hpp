@@ -8,7 +8,7 @@
 class TokenManager {
 private:
     std::unordered_map<std::string, std::string> available_tokens;
-    std::unordered_map<TokenType, std::string> TokenType_names;
+    std::unordered_map<TokenType, std::string> tokentype_names;
 public:
     TokenManager();
 
