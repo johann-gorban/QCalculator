@@ -26,4 +26,6 @@ public:
     const std::string &get_data() const noexcept;
 
     const TokenType get_type() const noexcept;
+
+    virtual ~Token() = default;
 };
