@@ -5,12 +5,8 @@
 
 
 void NumberCommand::execute(std::stack<double> &computation_stack, const token_ptr &token) {
-    auto number_token = std::static_pointer_cast<Number>(token);
-    if (!number_token) {
-        throw std::runtime_error("Computation error: expected a number");
-    }
-
-    computation_stack.push(number_token->get_value());
+    double number_data = std::stod(token->get_data());
+    computation_stack.push(number_data);
 }
 
 

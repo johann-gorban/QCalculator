@@ -1,5 +1,6 @@
 #include "command_manager.hpp"
 
+#include <stdexcept>
 
 CommandManager::CommandManager() {
     this->binary_operators["+"] = std::make_shared<AdditionCommand>();
@@ -36,6 +37,10 @@ const command_ptr CommandManager::get_command(const token_ptr &token) const {
                 command = this->unary_operators.at(token_name);
             }
         }
+    }
+
+    if (!command) {
+        throw std::runtime_error("Syntax error: no commands for such token found");
     }
     
     return command;

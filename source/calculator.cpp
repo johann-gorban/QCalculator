@@ -13,12 +13,8 @@ double Calculator::calculate(std::vector<std::shared_ptr<Token>> tokens_rpn) {
 
     for (const auto &token: tokens_rpn) {
         auto command = command_manager.get_command(token);
-        if (command) {
-            command->execute(computations, token);
-        }
-        else {
-            throw std::runtime_error("Syntax error: unknown token name");
-        }
+        command->execute(computations, token);
     } 
+    
     return computations.top();
 }
