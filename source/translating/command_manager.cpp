@@ -18,7 +18,7 @@ const command_ptr CommandManager::get_command(const token_ptr &token) const {
     
     TokenType token_type = token->get_type();
     if (token_type == TokenType::Number) {
-        command = std::make_shared<NumberCommand>();
+        command = std::make_shared<NumberCommand>(token);
     }
     else {
         std::string token_name = token->get_data();
@@ -27,7 +27,7 @@ const command_ptr CommandManager::get_command(const token_ptr &token) const {
             command = this->functions.at(token_name);
         }
         else if (token_type == TokenType::Operator) {
-            auto operator_token = std::dynamic_pointer_cast<OperatorToken>(token);
+            auto operator_token = std::static_pointer_cast<OperatorToken>(token);
             Arity token_arity = operator_token->get_arity();
             
             if (token_arity == Arity::Binary) {
