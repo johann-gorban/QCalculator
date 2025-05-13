@@ -1,8 +1,9 @@
 #include "tokenization/states.hpp"
 #include "tokenization/context.hpp"
 #include "tokenization/tokens.hpp"
-#include "tokenization/manager.hpp"
 #include "tokenization/state_factory.hpp"
+
+#include "token_manager.hpp"
 
 #include <memory>
 #include <algorithm>
