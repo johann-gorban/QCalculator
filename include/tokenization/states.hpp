@@ -48,14 +48,6 @@ public:
 };
 
 
-class UnaryOperatorState : public State {
-public:
-    void handle_char(TokenizerContext &context, char c) override;
-
-    void emit_token_from_buffer(TokenizerContext &context) override;
-};
-
-
 class ParanthesisState : public State {
 public:
     void handle_char(TokenizerContext &context, char c) override;

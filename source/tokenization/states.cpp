@@ -22,11 +22,6 @@ void StartState::handle_char(TokenizerContext &context, char c) {
     static StateFactory state_factory;
     state_ptr new_state = state_factory.create(c);
 
-    TokenManager token_manager;
-    if (token_manager.is_valid_name(std::string(1, c))) {
-        new_state = std::make_shared<UnaryOperatorState>();
-    }
-
     context.set_state(new_state);
 }
 
@@ -125,45 +120,6 @@ void OperatorState::emit_token_from_buffer(TokenizerContext &context) {
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void UnaryOperatorState::handle_char(TokenizerContext &context, char c) {
-    state_ptr new_state = std::make_shared<UnaryOperatorState>();
-
-    auto token_manager = context.get_manager();
-    if (token_manager.is_valid_name(std::string(1, c))) {
-        context.append_buffer(c);
-    }
-    else {
-        this->emit_token_from_buffer(context);
-        context.append_buffer(c);
-
-        static StateFactory state_factory;
-        new_state = state_factory.create(c);
-    }
-
-
-    context.set_state(new_state);
-}
-
-void UnaryOperatorState::emit_token_from_buffer(TokenizerContext &context) {
-    auto token_manager = context.get_manager();
-    
-    std::string current_buffer = context.get_buffer();
-    if (!token_manager.is_valid_name(current_buffer)) {
-        throw std::runtime_error("Lexical error: no unary operators with such syntax");
-    }
-    else {
-        if (token_manager.is_valid_name(current_buffer)) {
-            context.append_token(std::make_shared<Token>(current_buffer, TokenType::Operator));
-            context.clear_buffer();
-        }
-        else {
-            throw std::runtime_error("Lexical error: unknown operator");
-        }
-    }
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////
-
 void IdentifierState::handle_char(TokenizerContext &context, char c) {
     state_ptr new_state = std::make_shared<IdentifierState>();
 
@@ -214,11 +170,6 @@ void ParanthesisState::handle_char(TokenizerContext &context, char c) {
 
     static StateFactory state_factory;
     new_state = state_factory.create(c);
-
-    TokenManager token_manager;
-    if (token_manager.is_valid_name(std::string(1, c))) {
-        new_state = std::make_shared<UnaryOperatorState>();
-    }
 
     context.set_state(new_state);
 }
