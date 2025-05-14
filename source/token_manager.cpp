@@ -40,13 +40,16 @@ const std::string &TokenManager::get_type_name(TokenType type) const {
 }
 
 unsigned int TokenManager::get_precedance(const std::string &operator_name, Arity operator_arity) const {
+    unsigned int precedance = 0;
     if (this->precedance_table.count(operator_name) != 0) {
         const std::unordered_map<Arity, unsigned int> &operator_table = precedance_table.at(operator_name);
         if (operator_table.count(operator_arity) != 0) {
-            return operator_table.at(operator_arity);
+            precedance = operator_table.at(operator_arity);
         }
     }
     else {
         throw std::runtime_error("Token error: token has no precedance");
     }
+
+    return precedance;
 }
