@@ -9,9 +9,9 @@ set(CMAKE_BUILD_TYPE Debug)  # Автоматически добавляет -g 
 add_compile_options(-Wall -ggdb)  # -ggdb для расширенной информации GDB
 
 set(SOURCES
+    source/token_manager.cpp
     # Tokenization
-    source/tokenization/context.cpp
-    source/tokenization/manager.cpp
+    source/tokenization/context.cpp 
     source/tokenization/tokenizer.cpp
     source/tokenization/tokens.cpp
     source/tokenization/states.cpp
@@ -22,6 +22,9 @@ set(SOURCES
     source/parsing/parser_context.cpp
     source/parsing/parser.cpp
     source/parsing/states.cpp
+
+    # Sorting 
+    source/sorting/sorter.cpp
 )
 
 add_executable(prog.out ${SOURCES})
