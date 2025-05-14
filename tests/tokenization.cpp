@@ -2,7 +2,7 @@
 
 #include "tokenization/tokens.hpp"
 #include "tokenization/tokenizer.hpp"
-#include "tokenization/manager.hpp"
+#include "token_manager.hpp"
 
 class TokenPrinter {
 public:
