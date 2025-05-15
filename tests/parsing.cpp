@@ -17,10 +17,7 @@ public:
         if (type == TokenType::Operator) {
             auto etoken = std::static_pointer_cast<OperatorToken>(token);
             if (etoken) {
-                std::cout << " " << int(etoken->get_arity()) << " " << etoken->get_precedance();
-            }
-            else {
-                std::cerr << " Cast failed! Actual type: " << typeid(*token).name() << std::endl;
+                std::cout << " | Arity:" << int(etoken->get_arity()) << " | Precedance: " << etoken->get_precedance();
             }
         }
 
@@ -38,11 +35,16 @@ public:
 
         std::cout << "Test #" << test_number++ << std::endl;
 
-        std::vector<token_ptr> tokens = tokenizer.tokenize(expression_to_test);
-        std::vector<token_ptr> extended_tokens = parser.parse(tokens);
-        
-        for (const auto &token : tokens) {
-            TokenPrinter::visit(token);
+        try {
+            std::vector<token_ptr> tokens = tokenizer.tokenize(expression_to_test);
+            std::vector<token_ptr> extended_tokens = parser.parse(tokens);
+            
+            for (const auto &token : extended_tokens) {
+                TokenPrinter::visit(token);
+            }
+        }
+        catch (std::exception &e) {
+            std::cout << e.what() << std::endl;
         }
         std::cout << std::endl;
     }
@@ -55,7 +57,7 @@ int main() {
     
     // Test 1
     {
-        Tester::test("+2+3+4+");
+        Tester::test("2+3+4");
     }
 
     // Test 2
@@ -80,7 +82,7 @@ int main() {
 
     // Test 6
     {
-        Tester::test("sin(42)");
+        Tester::test("-sin(42)");
     }
 
     // Test 7
@@ -90,17 +92,22 @@ int main() {
 
     // Test 8
     {
-        try {
-            Tester::test("cos()");
-        }
-        catch (std::exception) {
-            std::cout << "Right!" << std::endl;
-        }
+        Tester::test("cos()");
     }
 
     // Test 9
     {
         Tester::test("sin(24,234)*2");
+    }
+
+    // Test 10
+    {
+        Tester::test("+234");
+    }
+
+    // Test 11
+    {
+        Tester::test("g()");
     }
 
     return 0;
