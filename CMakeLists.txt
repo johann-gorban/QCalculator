@@ -4,28 +4,35 @@ project(prog LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Настройки для отладки
-set(CMAKE_BUILD_TYPE Debug)  # Автоматически добавляет -g для GCC
-add_compile_options(-Wall -ggdb)  # -ggdb для расширенной информации GDB
+set(CMAKE_BUILD_TYPE Debug)
+add_compile_options(-Wall -ggdb)
 
-set(SOURCES
+set(CORE_SOURCES
     source/token_manager.cpp
-    # Tokenization
+    
     source/tokenization/context.cpp 
     source/tokenization/tokenizer.cpp
     source/tokenization/tokens.cpp
     source/tokenization/states.cpp
     source/tokenization/state_factory.cpp
-    
-    # Parsing
+
     source/parsing/extended_tokens.cpp
     source/parsing/parser_context.cpp
     source/parsing/parser.cpp
     source/parsing/states.cpp
 
-    # Sorting 
     source/sorting/sorter.cpp
 )
+
+set(TEST "" CACHE STRING "Test name to build")
+
+if(TEST)
+    set(SOURCES ${CORE_SOURCES} "tests/${TEST}.cpp")
+    message(STATUS "Building test: ${TEST}.cpp")
+else()
+    set(SOURCES ${CORE_SOURCES} "source/main.cpp")
+    message(STATUS "Building main program")
+endif()
 
 add_executable(prog.out ${SOURCES})
 
