@@ -11,6 +11,14 @@ TokenManager::TokenManager() {
     this->tokentype_names[TokenType::Parenthesis] = "PARENTHESIS";
     this->tokentype_names[TokenType::Separator] = "SEPARATOR";
 
+    // Precedance table (for operators)
+    this->precedance_table["+"][Arity::Binary] = 1;
+    this->precedance_table["-"][Arity::Binary] = 1;
+    this->precedance_table["-"][Arity::Unary] = 3;
+    this->precedance_table["*"][Arity::Binary] = 2;
+    this->precedance_table["/"][Arity::Binary] = 2;
+    this->precedance_table["^"][Arity::Binary] = 4;
+
     this->available_token_names.push_back("-");
     this->available_token_names.push_back("+");
     this->available_token_names.push_back("*");
@@ -39,17 +47,14 @@ const std::string &TokenManager::get_type_name(TokenType type) const {
     }
 }
 
-unsigned int TokenManager::get_precedance(const std::string &operator_name, Arity operator_arity) const {
-    unsigned int precedance = 0;
-    if (this->precedance_table.count(operator_name) != 0) {
-        const std::unordered_map<Arity, unsigned int> &operator_table = precedance_table.at(operator_name);
-        if (operator_table.count(operator_arity) != 0) {
-            precedance = operator_table.at(operator_arity);
-        }
-    }
-    else {
+unsigned int TokenManager::get_precedance(const std::string& operator_name, Arity operator_arity) const {
+    if (!this->precedance_table.count(operator_name)) {
         throw std::runtime_error("Token error: token has no precedance");
     }
 
-    return precedance;
+    const auto& operator_table = this->precedance_table.at(operator_name);
+    if (!operator_table.count(operator_arity)) {
+        throw std::runtime_error("Token error: token has no precedance for given arity");
+    }
+    return operator_table.at(operator_arity);
 }
