@@ -27,15 +27,11 @@ set(CORE_SOURCES
 set(TEST "" CACHE STRING "Test name to build")
 
 if(TEST)
-    set(SOURCES ${CORE_SOURCES} "tests/${TEST}.cpp")
+    add_executable(test_${TEST} ${CORE_SOURCES} "tests/${TEST}.cpp")
+    target_include_directories(test_${TEST} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
     message(STATUS "Building test: ${TEST}.cpp")
 else()
-    set(SOURCES ${CORE_SOURCES} "source/main.cpp")
+    add_executable(algrebrator.out ${CORE_SOURCES} "source/main.cpp")
+    target_include_directories(algrebrator.out PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
     message(STATUS "Building main program")
 endif()
-
-add_executable(prog.out ${SOURCES})
-
-target_include_directories(prog.out PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
