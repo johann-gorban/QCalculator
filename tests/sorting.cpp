@@ -47,7 +47,7 @@ public:
             std::vector<token_ptr> extended_tokens = parser.parse(tokens);
             std::vector<token_ptr> sorted_tokens = sorter.rpn_sort(extended_tokens);
 
-            for (const auto &token : extended_tokens) {
+            for (const auto &token : sorted_tokens) {
                 ExtendedTokenPrinter::visit(token);
             }
         }
