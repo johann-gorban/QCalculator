@@ -7,7 +7,7 @@
 #include "parsing/parser.hpp"
 #include "parsing/extended_tokens.hpp"
 
-class TokenPrinter {
+class ExtendedTokenPrinter {
 public:
     static void visit(const token_ptr token) noexcept {
         TokenManager manager;
@@ -40,7 +40,7 @@ public:
             std::vector<token_ptr> extended_tokens = parser.parse(tokens);
             
             for (const auto &token : extended_tokens) {
-                TokenPrinter::visit(token);
+                ExtendedTokenPrinter::visit(token);
             }
         }
         catch (std::exception &e) {
@@ -54,60 +54,85 @@ long unsigned int Tester::test_number = 1;
 
 
 int main() {
-    
     // Test 1
     {
-        Tester::test("2+3+4");
+        Tester::test("2+3*4");
     }
-
     // Test 2
     {
-        Tester::test("2*2-2+2");
+        Tester::test("(2+3)*4");
     }
-
     // Test 3
     {
-        Tester::test("254*22/2");
+        Tester::test(")34");
     }
-
     // Test 4
     {
-        Tester::test("254(2+3+4)");
+        Tester::test("2++3");
     }
-
     // Test 5
     {
-        Tester::test("123.3*34");
+        Tester::test("sin(30)+45");
     }
-
     // Test 6
     {
-        Tester::test("-sin(42)");
+        Tester::test("2*3+");
     }
-
     // Test 7
     {
-        Tester::test("sin(24/4)*2");
+        Tester::test("(2+3");
     }
-
     // Test 8
     {
-        Tester::test("cos()");
+        Tester::test("23+4");
     }
-
     // Test 9
     {
-        Tester::test("sin(24,234)*2");
+        Tester::test("2+3*4/5");
     }
-
     // Test 10
     {
-        Tester::test("+234");
+        Tester::test("sin(cos(30))");
     }
-
     // Test 11
     {
-        Tester::test("g()");
+        Tester::test("2*3+4*5");
+    }
+    // Test 12
+    {
+        Tester::test("+2+3");
+    }
+    // Test 13
+    {
+        Tester::test("2..3+4");
+    }
+    // Test 14
+    {
+        Tester::test("2+3*");
+    }
+    // Test 15
+    {
+        Tester::test("sin30");
+    }
+    // Test 16
+    {
+        Tester::test("2+(3*4))");
+    }
+    // Test 17
+    {
+        Tester::test("2+3*4/");
+    }
+    // Test 18
+    {
+        Tester::test("(2+3)*(4-5)");
+    }
+    // Test 19
+    {
+        Tester::test("2+3*4-5/6");
+    }
+    // Test 20
+    {
+        Tester::test("sin(cos(tan(45)))");
     }
 
     return 0;
