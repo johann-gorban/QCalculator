@@ -1,30 +1,40 @@
-#include "sort_command_manager.hpp"
+#include "sorting/sort_command_manager.hpp"
+
+#include <stdexcept>
 
 SortCommandManager::SortCommandManager() {
-    this->commands["ADD"] = std::make_shared<SortOperatorCommand>();  
-    this->commands["SUB"] = std::make_shared<SortOperatorCommand>();  
-    this->commands["MUL"] = std::make_shared<SortOperatorCommand>();  
-    this->commands["DIV"] = std::make_shared<SortOperatorCommand>();  
-    this->commands["POW"] = std::make_shared<SortOperatorCommand>();
+    this->commands[TokenType::Number] = std::make_shared<SortNumberCommand>();
+    this->commands[TokenType::Operator] = std::make_shared<SortOperatorCommand>();
+    this->commands[TokenType::Function] = std::make_shared<SortFunctionCommand>();
+    this->commands[TokenType::Separator] = std::make_shared<SortSeparatorCommand>();
 
-    this->commands["NUMBER"] = std::make_shared<SortNumberCommand>();
-    this->commands["SEPARATOR"] = std::make_shared<SortSeparatorCommand>();
-    this->commands["LEFT_PARANTHESIS"] = std::make_shared<SortLeftParenthesisCommand>();
-    this->commands["RIGHT_PARANTHESIS"] = std::make_shared<SortRightParenthesisCommand>();  
+    this->parenthesis_command["LEFT_PARENTHESIS"] = std::make_shared<SortLeftParenthesisCommand>();
+    this->parenthesis_command["RIGHT_PARENTHESIS"] = std::make_shared<SortRightParenthesisCommand>();
 }
 
 const sort_command_ptr SortCommandManager::get_command(const token_ptr &token) const {
     sort_command_ptr command(nullptr);
 
-    std::string token_name = token->get_data();
+    if (!token) {
+        throw std::runtime_error("Sort error: null token was given");
+    }
 
-    if (this->commands.count(token_name)) {
-        command = this->commands.at(token_name);
+    TokenType token_type = token->get_type();
+    if (token_type == TokenType::Parenthesis) {
+        std::string parenthesis_type = token->get_data();
+        if (this->parenthesis_command.count(parenthesis_type)) {
+            command = parenthesis_command.at(parenthesis_type);
+        }
+        else {
+            throw std::runtime_error("Sort error: command for token not found");
+        }
+    }
+    else if (this->commands.count(token_type)) {
+        command = this->commands.at(token_type);
+    }
+    else {
+            throw std::runtime_error("Sort error: command for token not found");
     }
     
     return command;
-}
-
-bool SortCommandManager::has_command(const std::string &token_name) const {
-    return (commands.find(token_name) != commands.end());
 }

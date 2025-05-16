@@ -1,6 +1,6 @@
 #pragma once
 
-#include "tokenization/tokens.hpp"
+#include "parsing/extended_tokens.hpp"
 
 #include <vector>
 
