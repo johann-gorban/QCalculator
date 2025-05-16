@@ -16,9 +16,9 @@ SortCommandManager::SortCommandManager() {
 const sort_command_ptr SortCommandManager::get_command(const token_ptr &token) const {
     sort_command_ptr command(nullptr);
 
-    std::string token_name = token->get_name();
+    std::string token_name = token->get_data();
 
-    if (this->has_command(token_name)) {
+    if (this->commands.count(token_name)) {
         command = this->commands.at(token_name);
     }
     

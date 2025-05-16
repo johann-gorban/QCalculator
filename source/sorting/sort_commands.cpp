@@ -17,7 +17,7 @@ void SortSeparatorCommand::execute(std::vector<token_ptr> &tokens, std::vector<t
     while (!tokens.empty()) {
         token_ptr token_in_stack = tokens.back();
     
-        if (token_in_stack->get_name() == "LEFT_PARANTHESIS") {
+        if (token_in_stack->get_data() == "LEFT_PARENTHESIS") {
             break;
         }
     
