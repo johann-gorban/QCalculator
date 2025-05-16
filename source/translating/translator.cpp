@@ -1,7 +1,7 @@
 #include "translating/translator.hpp"
 
 
-const std::vector<command_ptr> &Translator::translate_tokens(std::vector<token_ptr> &tokens) const {
+const std::vector<command_ptr> Translator::translate_tokens(std::vector<token_ptr> &tokens) const {
     std::vector<command_ptr> commands;
 
     CommandManager command_manager;
@@ -14,4 +14,4 @@ const std::vector<command_ptr> &Translator::translate_tokens(std::vector<token_p
     }
 
     return commands;
-}
+} 
