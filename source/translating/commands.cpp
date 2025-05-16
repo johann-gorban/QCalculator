@@ -4,7 +4,7 @@
 #include <cmath>
 
 
-NumberCommand::NumberCommand(token_ptr& token) : token(token) {}
+NumberCommand::NumberCommand(const token_ptr& token) : token(token) {}
 
 void NumberCommand::execute(std::stack<double>& computation_stack) {
     double number_data = std::stod(token->get_data());

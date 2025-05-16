@@ -2,7 +2,7 @@
 
 #include <stack>
 
-#include "tokens.hpp"
+#include "parsing/extended_tokens.hpp"
 
 class Command;
 
@@ -19,7 +19,7 @@ class NumberCommand : public Command {
 private:
     const token_ptr token;
 public:
-    explicit NumberCommand(token_ptr &token);
+    explicit NumberCommand(const token_ptr &token);
 
     NumberCommand() = delete; 
 
