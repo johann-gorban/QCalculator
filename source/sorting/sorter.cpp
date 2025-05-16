@@ -8,10 +8,8 @@ std::vector<token_ptr> Sorter::rpn_sort(const std::vector<token_ptr> &tokens) {
     // "Stack" for storing tokens in reverse polnish notation order
     std::vector<token_ptr> result;
 
+    // Stack for intermediate computations
     std::stack<token_ptr> token_stack;
-    for (auto it = tokens.rbegin(); it != tokens.rend(); ++it) {
-        token_stack.push(*it);
-    }
 
     static SortCommandManager command_manager;
     for (const auto& token : tokens) {
@@ -23,4 +21,4 @@ std::vector<token_ptr> Sorter::rpn_sort(const std::vector<token_ptr> &tokens) {
     end_command->execute(token_stack, result, nullptr);
 
     return result;
-}
+}   
