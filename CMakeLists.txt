@@ -24,6 +24,12 @@ set(CORE_SOURCES
     source/sorting/sorter.cpp
     source/sorting/command_manager.cpp
     source/sorting/commands.cpp
+    
+    source/translating/translator.cpp
+    source/translating/command_manager.cpp
+    source/translating/commands.cpp
+
+    source/computation/calculator.cpp
 )
 
 set(TEST "" CACHE STRING "Test name to build")
