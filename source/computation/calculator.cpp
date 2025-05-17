@@ -12,5 +12,10 @@ double Calculator::calculate(const std::vector<command_ptr> &commands){
         command->execute(computations);
     } 
     
-    return computations.top();
+    if (computations.empty()) {
+        throw std::runtime_error("Empty expression");
+    }
+    else {
+        return computations.top();
+    }
 }
