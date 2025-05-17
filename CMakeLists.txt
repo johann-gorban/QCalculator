@@ -30,6 +30,8 @@ set(CORE_SOURCES
     source/translating/commands.cpp
 
     source/computation/calculator.cpp
+
+    source/facade.cpp
 )
 
 set(TEST "" CACHE STRING "Test name to build")
