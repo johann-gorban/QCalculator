@@ -8,7 +8,8 @@ Facade::Facade() :
     sorter(),
     translator(),
     memory(),
-    parser()
+    parser(),
+    history()
 {}
 
 const std::string Facade::calculate(const std::string &expression) {

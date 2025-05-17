@@ -6,6 +6,7 @@
 #include "tokenization/tokenizer.hpp"
 #include "parsing/parser.hpp"
 #include "memory/memory.hpp"
+#include "history/history.hpp"
 
 #include <string>
 
@@ -17,6 +18,7 @@ private:
     Translator translator;
     Calculator calculator;
     Memory memory;
+    History history;
 public:
     Facade();
 
