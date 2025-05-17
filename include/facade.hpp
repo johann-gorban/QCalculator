@@ -22,7 +22,7 @@ private:
 public:
     Facade();
 
-    const std::string calculate(const std::string &expression);
+    const std::string calculate(const std::string &expression) const;
     
     const std::string memory_add(const std::string &expression) noexcept;
 
@@ -30,5 +30,5 @@ public:
 
     const void memory_clear() noexcept;
 
-    const std::string memory_read() noexcept;
+    const std::string memory_read() const noexcept;
 };

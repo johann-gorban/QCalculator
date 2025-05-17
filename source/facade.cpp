@@ -3,23 +3,18 @@
 #include "parsing/extended_tokens.hpp"
 
 Facade::Facade() :
-    calculator(),
-    tokenizer(),
-    sorter(),
-    translator(),
     memory(),
-    parser(),
     history()
 {}
 
-const std::string Facade::calculate(const std::string &expression) {
+const std::string Facade::calculate(const std::string &expression) const {
     std::string result;
-
+    
     static Tokenizer tokenizer;
     static Parser parser;
     static Sorter sorter;
-    static Translator translator;
     static Calculator calculator;
+
     try {
         std::vector<token_ptr> tokens = tokenizer.tokenize(expression);
         std::vector<token_ptr> extended_tokens = parser.parse(tokens);
@@ -65,6 +60,6 @@ const void Facade::memory_clear() noexcept {
     this->memory.clear();
 }
 
-const std::string Facade::memory_read() noexcept {
+const std::string Facade::memory_read() const noexcept {
     return std::to_string(this->memory.get_value());
 }
