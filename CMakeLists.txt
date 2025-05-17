@@ -32,6 +32,13 @@ set(CORE_SOURCES
     source/computation/calculator.cpp
 
     source/facade.cpp
+
+    source/memory/memory.cpp
+
+    source/history/history.cpp
+
+    source/cli/commands.cpp
+    source/cli/menu.cpp
 )
 
 set(TEST "" CACHE STRING "Test name to build")
@@ -41,7 +48,7 @@ if(TEST)
     target_include_directories(test_${TEST} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
     message(STATUS "Building test: ${TEST}.cpp")
 else()
-    add_executable(algrebrator.out ${CORE_SOURCES} "source/main.cpp")
+    add_executable(algrebrator.out ${CORE_SOURCES} "source/cli/main.cpp")
     target_include_directories(algrebrator.out PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
     message(STATUS "Building main program")
 endif()
