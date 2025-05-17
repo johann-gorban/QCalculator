@@ -1,15 +1,15 @@
 #include "facade.hpp"
 
-#include "tokenization/tokens.hpp"
-#include "tokenization/tokenizer.hpp"
-
-#include "parsing/parser.hpp"
 #include "parsing/extended_tokens.hpp"
 
-#include "sorting/sorter.hpp"
-#include "translating/translator.hpp"
-#include "computation/calculator.hpp"
-
+Facade::Facade() :
+    calculator(),
+    tokenizer(),
+    sorter(),
+    translator(),
+    memory(),
+    parser()
+{}
 
 const std::string Facade::calculate(const std::string &expression) {
     std::string result;
@@ -32,4 +32,38 @@ const std::string Facade::calculate(const std::string &expression) {
     }
     
     return result;
+}
+
+const std::string Facade::memory_add(const std::string &expression) noexcept {
+    std::string result = "";
+    try {
+        double value = std::stod(expression);
+        this->memory.add(value);
+    }
+    catch (std::exception &error) {
+        result = error.what();
+    }
+
+    return result;
+}
+
+const std::string Facade::memory_substract(const std::string &expression) noexcept {
+    std::string result = "";
+    try {
+        double value = std::stod(expression);
+        this->memory.substract(value);
+    }
+    catch (std::exception &error) {
+        result = error.what();
+    }
+
+    return result;
+}
+
+const void Facade::memory_clear() noexcept {
+    this->memory.clear();
+}
+
+const std::string Facade::memory_read() noexcept {
+    return std::to_string(this->memory.get_value());
 }
