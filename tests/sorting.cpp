@@ -142,6 +142,25 @@ int main() {
     {
         Tester::test("sin(30)*(2+cos(45))-tan(60)/4");
     }
-    
+    // Test 21
+    {
+        Tester::test("sin(75)*(3-cos(30))/-2+cos(45)");
+    }
+    // Test 22
+    {
+        Tester::test("tan(60)*2+tan(30)-1/4");
+    }
+    // Test 23
+    {
+        Tester::test("cos(45)-3*sin(45)+1/5*sqrt(2)");
+    }
+    // Test 24
+    {
+        Tester::test("sin(30)/(1+cos(45))+log(8)/log(2)");
+    }
+    // Test 25
+    {
+        Tester::test("(3*(2+(4-5)))*(sin((7+8)/9)-10/11)+12*13-14");
+    }    
     return 0;
 }
