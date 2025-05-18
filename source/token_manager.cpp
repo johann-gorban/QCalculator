@@ -26,6 +26,8 @@ TokenManager::TokenManager() {
     this->available_token_names.push_back("^");
 
     this->available_token_names.push_back("sin");
+    this->available_token_names.push_back("cos");
+    this->available_token_names.push_back("tan");
 }
 
 bool TokenManager::is_valid_name(const std::string &name) const noexcept {

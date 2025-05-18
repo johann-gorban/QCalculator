@@ -61,3 +61,18 @@ public:
     MinusCommand();
     void execute(std::stack<double> &computation_stack) override;
 };
+
+class SinCommand : public Command {
+public: 
+    void execute(std::stack<double> &computation_stack) override;
+};
+
+class CosCommand : public Command {
+public: 
+    void execute(std::stack<double> &computation_stack) override;
+};
+
+class TanCommand : public Command {
+public: 
+    void execute(std::stack<double> &computation_stack) override;
+};

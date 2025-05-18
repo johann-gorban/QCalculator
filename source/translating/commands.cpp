@@ -68,3 +68,21 @@ void MinusCommand::execute(std::stack<double>& computation_stack) {
     computation_stack.pop();
     computation_stack.push(neg_a);
 }
+
+void SinCommand::execute(std::stack<double>& computation_stack) {
+    double a = computation_stack.top();
+    computation_stack.pop();
+    computation_stack.push(sin(a));
+}
+
+void CosCommand::execute(std::stack<double>& computation_stack) {
+    double a = computation_stack.top();
+    computation_stack.pop();
+    computation_stack.push(cos(a));
+}
+
+void TanCommand::execute(std::stack<double>& computation_stack) {
+    double a = computation_stack.top();
+    computation_stack.pop();
+    computation_stack.push(tan(a));
+}

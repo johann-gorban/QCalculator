@@ -9,8 +9,11 @@ CommandManager::CommandManager() {
     this->binary_operators["/"] = std::make_shared<DivisionCommand>();
     this->binary_operators["^"] = std::make_shared<PowerCommand>();
 
-    // this->functions["sin"] = std::make_shared<SinCommand>();
     this->unary_operators["-"] = std::make_shared<MinusCommand>();
+
+    this->functions["sin"] = std::make_shared<SinCommand>();
+    this->functions["cos"] = std::make_shared<SinCommand>();
+    this->functions["tan"] = std::make_shared<SinCommand>();
 }
 
 const command_ptr CommandManager::get_command(const token_ptr &token) const {
