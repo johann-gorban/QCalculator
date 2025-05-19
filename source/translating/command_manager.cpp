@@ -12,8 +12,8 @@ CommandManager::CommandManager() {
     this->unary_operators["-"] = std::make_shared<MinusCommand>();
 
     this->functions["sin"] = std::make_shared<SinCommand>();
-    this->functions["cos"] = std::make_shared<SinCommand>();
-    this->functions["tan"] = std::make_shared<SinCommand>();
+    this->functions["cos"] = std::make_shared<CosCommand>();
+    this->functions["tan"] = std::make_shared<TanCommand>();
 }
 
 const command_ptr CommandManager::get_command(const token_ptr &token) const {
