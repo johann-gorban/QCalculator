@@ -48,7 +48,7 @@ if(BUILD_CLI)
 elseif(BUILD_GUI)
     message(STATUS "GUI build enabled")
 
-    find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
+    find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets UiTools)
 
     qt_standard_project_setup()
 
@@ -76,6 +76,7 @@ elseif(BUILD_GUI)
         PRIVATE
             Qt::Core
             Qt::Widgets
+            Qt6::UiTools
     )
 
     include(GNUInstallDirs)
