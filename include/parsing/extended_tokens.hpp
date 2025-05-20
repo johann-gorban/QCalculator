@@ -19,7 +19,7 @@ private:
     const Associativity associativity;
     const Arity arity;
 public:
-    explicit OperatorToken(
+    OperatorToken(
         const Token& token,
         unsigned int precedance, 
         Associativity associativity, 
@@ -35,24 +35,24 @@ public:
 
 
 class FunctionToken : public Token {
-    public:
-        explicit FunctionToken(const Token& token) noexcept;
-    };
+public:
+    FunctionToken(const Token& token) noexcept;
+};
 
 
 class NumberToken : public Token {
 public:
-    explicit NumberToken(const Token& token) noexcept;
+    NumberToken(const Token& token) noexcept;
 };
 
 
 class ParenthesisToken : public Token {
 public:
-    explicit ParenthesisToken(const Token& token) noexcept;
+    ParenthesisToken(const Token& token) noexcept;
 };
 
 
 class SeparatorToken : public Token {
 public:
-    explicit SeparatorToken(const Token& token) noexcept;
+    SeparatorToken(const Token& token) noexcept;
 };
