@@ -2,8 +2,10 @@
 
 #include "parser_context.hpp"
 
-
+class ParseState;
 class ParseParserContext;
+
+using parse_state_ptr = std::shared_ptr<ParseState>;
 
 class ParseState {
 public:
