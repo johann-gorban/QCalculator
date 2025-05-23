@@ -1,4 +1,6 @@
-#include "_output_line.hpp"
+#include "output_line.hpp"
+
+#include <QVBoxLayout>
 
 OutputLine::OutputLine(QWidget *parent) : QWidget(parent) {
     this->_is_answer = true;
@@ -8,7 +10,7 @@ OutputLine::OutputLine(QWidget *parent) : QWidget(parent) {
     
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(this->_output_line);
-    layout->setContentMargins(0, 0, 0, 0);
+    layout->setContentsMargins(0, 0, 0, 0);
     this->setLayout(layout);
 }
 
