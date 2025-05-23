@@ -19,15 +19,15 @@ private:
 
     void setup_signals();
 private slots:
-    void calculate(const QString &);
+    void calculate();
 
     void clear();
 
     void clear_memory();
 
-    void add_memory(const QString &);
+    void add_memory();
 
-    void subsract_memory(const QString &);
+    void subsract_memory();
 
-    const QString get_memory(const QString &);
+    void get_memory();
 };

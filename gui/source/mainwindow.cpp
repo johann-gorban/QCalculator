@@ -35,21 +35,37 @@ MainWindow::~MainWindow() {
 
 }
 
-void MainWindow::calculate(const QString &) {
+void MainWindow::calculate() {
+    // Get expression from OutputLine
+    // Calculate it, if it is an answer
+    // If not, do not touch (optimization)
+
+    // Then get the answer
+    // Set text to it as answer
 }
 
 void MainWindow::clear() {
+    // Just clearoutput (set to zero as answer)
 }
 
 void MainWindow::clear_memory() {
+    // Clear memory using facade
 }
 
-void MainWindow::add_memory(const QString &) {
+void MainWindow::add_memory() {
+    // Get value from outputline
+    // Convert to double
+    // Call facade method
 }
 
-void MainWindow::subsract_memory(const QString &) {
+void MainWindow::subsract_memory() {
+    // Get value from outputline
+    // Convert to double
+    // Call facade method
 }
 
-const QString MainWindow::get_memory(const QString &) {
-    return {};
+void MainWindow::get_memory() {
+    // Call facade method
+    // Convert to string
+    // Set value as answer
 }
