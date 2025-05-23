@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 }
 
 void MainWindow::setup_ui() {
-    QString ui_path = QDir(QCoreApplication::applicationDirPath()).absoluteFilePath("../forms/mainwindow.ui");
+    QString ui_path = ":/gui/forms/mainwindow.ui";
 
     QFile ui_form(ui_path);
 

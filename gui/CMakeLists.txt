@@ -17,8 +17,11 @@ file(GLOB_RECURSE GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
 )
 
+set(CMAKE_AUTORCC ON)
+
 qt_add_executable(Calculator
     WIN32 MACOSX_BUNDLE
+    ${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc
     ${GUI_HEADERS}
     ${GUI_SOURCES}
 )
