@@ -7,6 +7,7 @@ OutputLine::OutputLine(QWidget *parent) : QWidget(parent) {
 
     this->_output_line = new QLineEdit("0", this);
     this->_output_line->setReadOnly(true);   
+    this->_output_line->setAlignment(Qt::AlignRight);
     
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(this->_output_line);
