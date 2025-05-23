@@ -8,8 +8,8 @@
 class MainWindow : public QWidget {
     Q_OBJECT
 private:
-    Facade *facade;
-    OutputLine *output;
+    Facade *_facade;
+    OutputLine *_output;
 public:
     MainWindow(QWidget *parent = nullptr);
 
