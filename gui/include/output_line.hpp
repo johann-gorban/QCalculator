@@ -6,7 +6,7 @@
 class OutputLine : public QWidget {
     Q_OBJECT
 private:
-    QLineEdit *output_line;
+    QLineEdit *_output_line;
     bool _is_answer = true;
 public: 
     OutputLine(QWidget *parent = nullptr);
