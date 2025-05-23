@@ -14,7 +14,7 @@ file(GLOB_RECURSE GUI_SOURCES
 )
 
 file(GLOB_RECURSE GUI_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/*.CPP
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
 )
 
 qt_add_executable(Calculator
@@ -28,7 +28,7 @@ target_include_directories(Calculator
         ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-target_link_libraries(computation
+target_link_libraries(Calculator
     PRIVATE
         calculation
         Qt::Core

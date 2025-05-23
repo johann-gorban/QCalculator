@@ -1,4 +1,4 @@
-#include "gui/mainwindow.hpp"
+#include "mainwindow.hpp"
 
 #include <QUiLoader>
 #include <QFile>
@@ -33,4 +33,23 @@ void MainWindow::setup_ui() {
 
 MainWindow::~MainWindow() {
 
+}
+
+void MainWindow::calculate(const QString &) {
+}
+
+void MainWindow::clear() {
+}
+
+void MainWindow::clear_memory() {
+}
+
+void MainWindow::add_memory(const QString &) {
+}
+
+void MainWindow::subsract_memory(const QString &) {
+}
+
+const QString MainWindow::get_memory(const QString &) {
+    return {};
 }

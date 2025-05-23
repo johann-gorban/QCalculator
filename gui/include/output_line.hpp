@@ -11,4 +11,4 @@ public:
     bool is_answer() const;
 
     void set_answer(bool is_answer);
-}
+};
