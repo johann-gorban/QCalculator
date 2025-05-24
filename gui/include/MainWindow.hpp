@@ -30,6 +30,8 @@ private slots:
 
     void clear();
 
+    void backspace();
+
     void clearMemory();
 
     void addMemory();

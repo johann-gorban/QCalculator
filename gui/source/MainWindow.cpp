@@ -70,13 +70,15 @@ void MainWindow::setupKeyboard() {
 
     this->buttons["sqrt"] = this->centralWidget->findChild<QPushButton*>("ButtonSqrt");
 
+    this->buttons["Remove"] = this->centralWidget->findChild<QPushButton *>("ButtonBackspace");
     this->buttons["Calculate"] = this->centralWidget->findChild<QPushButton*>("ButtonProcess");
-    this->buttons["ClearInput"] = this->centralWidget->findChild<QPushButton*>("ButtonClearInput");
+    this->buttons["Clear"] = this->centralWidget->findChild<QPushButton*>("ButtonClearInput");
 }
 
 void MainWindow::setupSlots() {
     QObject::connect(this->buttons["Calculate"], &QPushButton::clicked, this, &MainWindow::calculate);
-    QObject::connect(this->buttons["ClearInput"], &QPushButton::clicked, this, &MainWindow::clear);
+    QObject::connect(this->buttons["Clear"], &QPushButton::clicked, this, &MainWindow::clear);
+    QObject::connect(this->buttons["Remove"], &QPushButton::clicked, this, &MainWindow::backspace);
 
     QObject::connect(this->buttons["0"], &QPushButton::clicked, this, [this]() { this->outputDisplay->insert("0"); });
     QObject::connect(this->buttons["1"], &QPushButton::clicked, this, [this]() { this->outputDisplay->insert("1"); });
@@ -112,6 +114,10 @@ void MainWindow::calculate() {
 
 void MainWindow::clear() {
     this->outputDisplay->clear();
+}
+
+void MainWindow::backspace() {
+    this->outputDisplay->backspace();
 }
 
 void MainWindow::clearMemory() {
