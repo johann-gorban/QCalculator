@@ -19,8 +19,12 @@ bool OutputLine::is_answer() const {
     return this->_is_answer;
 }
 
+const QString OutputLine::get_content() const {
+    return this->_output_line->text();
+}
+
 void OutputLine::clear() {
-    this->_output_line->clear();
+    this->set_answer("0");
 }
 
 void OutputLine::set_answer(const QString &text) {

@@ -12,6 +12,8 @@ public:
     explicit OutputLine(QWidget *parent = nullptr);
 
     bool is_answer() const;
+
+    const QString get_content() const;
 public slots:
     void set_answer(const QString &text);
 
