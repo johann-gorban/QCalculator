@@ -57,7 +57,7 @@
     <item row="1" column="3">
      <widget class="QPushButton" name="ButtonDivide">
       <property name="text">
-       <string>÷</string>
+       <string>/</string>
       </property>
      </widget>
     </item>
@@ -214,7 +214,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="OutputLine" name="widget" native="true">
+  <widget class="OutputLine" name="OutputLine" native="true">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -229,7 +229,7 @@
   <customwidget>
    <class>OutputLine</class>
    <extends>QWidget</extends>
-   <header>gui/output_line.hpp</header>
+   <header>output_line.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
