@@ -6,20 +6,22 @@
 class OutputLine : public QWidget {
     Q_OBJECT
 private:
-    QLineEdit *_output_line;
-    bool _is_answer;
+    QLineEdit *outputDisplay;
+    bool isAnswerFlag;
 public: 
     explicit OutputLine(QWidget *parent = nullptr);
 
-    bool is_answer() const;
+    bool isAnswer() const;
 
-    const QString get_content() const;
+    const QString getContent() const;
 public slots:
-    void set_answer(const QString &text);
+    void setAnswer(const QString &text);
+
+    void backspace();
 
     void insert(const QString &text);
 
-    void insert_function(const QString &text);
+    void insertFunction(const QString &text);
 
     void clear();
 };

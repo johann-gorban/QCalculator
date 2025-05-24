@@ -4,20 +4,28 @@
 #include "output_line.hpp"
 
 #include <QWidget>
+#include <QPushButton>
+
+#include <QMap>
+#include <QString>
 
 class MainWindow : public QWidget {
     Q_OBJECT
 private:
-    Facade *facade;
-    OutputLine *output;
+    QWidget *_central_widget;
+    Facade *_facade;
+    OutputLine *_output;
+    QMap<QString, QPushButton *> _buttons;
 public:
     MainWindow(QWidget *parent = nullptr);
 
-    ~MainWindow();
+    ~MainWindow() = default;
 private:
     void setup_ui();
 
-    void setup_signals();
+    void setup_keyboard();
+
+    void setup_slots();
 private slots:
     void calculate();
 
