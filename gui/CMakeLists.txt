@@ -34,8 +34,8 @@ target_include_directories(Calculator
 target_link_libraries(Calculator
     PRIVATE
         calculation
-        Qt::Core
-        Qt::Widgets
+        Qt6::Core
+        Qt6::Widgets
         Qt6::UiTools
 )
 
