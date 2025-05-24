@@ -27,6 +27,10 @@ void OutputLine::clear() {
     this->setAnswer("0");
 }
 
+void OutputLine::backspace() {
+    this->outputDisplay->backspace();
+}
+
 void OutputLine::setAnswer(const QString &text) {
     this->outputDisplay->setText(text);
     this->isAnswerFlag = true;
