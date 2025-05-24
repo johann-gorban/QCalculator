@@ -3,7 +3,6 @@
 #include <QUiLoader>
 #include <QFile>
 #include <QString>
-
 #include <QLayout>
 #include <QVBoxLayout>
 
@@ -100,36 +99,32 @@ void MainWindow::setup_slots() {
 }
 
 void MainWindow::calculate() {
-    // Get expression from OutputLine
-    // Calculate it, if it is an answer
-    // If not, do not touch (optimization)
-
-    // Then get the answer
-    // Set text to it as answer
+    QString display_data = this->_output->get_content();
+    if (!this->_output->is_answer()) {
+        display_data = QString::fromStdString(this->_facade->calculate(display_data.toStdString()));
+    }
+    this->_output->set_answer(display_data);
 }
 
 void MainWindow::clear() {
-    // Just clearoutput (set to zero as answer)
+    this->_output->clear();
 }
 
 void MainWindow::clear_memory() {
-    // Clear memory using facade
+    this->_facade->memory_clear();
 }
 
 void MainWindow::add_memory() {
-    // Get value from outputline
-    // Convert to double
-    // Call facade method
+    QString display_data = this->_output->get_content();
+    this->_facade->memory_add(display_data.toStdString());
 }
 
 void MainWindow::subsract_memory() {
-    // Get value from outputline
-    // Convert to double
-    // Call facade method
+    QString display_data = this->_output->get_content();
+    this->_facade->memory_substract(display_data.toStdString());
 }
 
 void MainWindow::get_memory() {
-    // Call facade method
-    // Convert to string
-    // Set value as answer
+    QString memory_data = QString::fromStdString(this->_facade->memory_read());
+    this->_output->set_answer(memory_data);
 }
