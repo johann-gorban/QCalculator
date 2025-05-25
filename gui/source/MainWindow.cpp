@@ -27,6 +27,8 @@ void MainWindow::setupUI() {
 
     QFile ui_form(ui_path);
 
+    this->setFixedSize(425, 450);
+
     if (!ui_form.open(QFile::ReadOnly)) {
         std::cout << "Error: cannot open file" << std::endl;
     } else {
