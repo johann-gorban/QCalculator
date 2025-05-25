@@ -70,6 +70,11 @@ void MainWindow::setupKeyboard() {
 
     this->buttons["sqrt"] = this->centralWidget->findChild<QPushButton*>("ButtonSqrt");
 
+    this->buttons["MC"] = this->centralWidget->findChild<QPushButton*>("ButtonMemoryClear");
+    this->buttons["MR"] = this->centralWidget->findChild<QPushButton*>("ButtonMemoryRead");
+    this->buttons["M+"] = this->centralWidget->findChild<QPushButton*>("ButtonMemoryAdd");
+    this->buttons["M-"] = this->centralWidget->findChild<QPushButton*>("ButtonMemorySubstract");
+
     this->buttons["Remove"] = this->centralWidget->findChild<QPushButton *>("ButtonBackspace");
     this->buttons["Calculate"] = this->centralWidget->findChild<QPushButton*>("ButtonProcess");
     this->buttons["Clear"] = this->centralWidget->findChild<QPushButton*>("ButtonClearInput");
@@ -94,6 +99,11 @@ void MainWindow::setupSlots() {
 
     QObject::connect(this->buttons["("], &QPushButton::clicked, this, [this]() { this->outputDisplay->insert("("); });
     QObject::connect(this->buttons[")"], &QPushButton::clicked, this, [this]() { this->outputDisplay->insert(")"); });
+
+    QObject::connect(this->buttons["MC"], &QPushButton::clicked, this, &MainWindow::clearMemory);
+    QObject::connect(this->buttons["MR"], &QPushButton::clicked, this, &MainWindow::getMemory);
+    QObject::connect(this->buttons["M+"], &QPushButton::clicked, this, &MainWindow::addMemory);
+    QObject::connect(this->buttons["M-"], &QPushButton::clicked, this, &MainWindow::subsractMemory);
 
     QObject::connect(this->buttons["add"] , &QPushButton::clicked, this, [this]() { this->outputDisplay->insert("+"); });
     QObject::connect(this->buttons["sub"] , &QPushButton::clicked, this, [this]() { this->outputDisplay->insert("-"); });
