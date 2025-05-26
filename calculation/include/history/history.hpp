@@ -12,6 +12,8 @@ private:
 public:
     void save(const std::string &expression) noexcept;
 
+    bool empty() const noexcept;
+
     // Returns empty string if invalid index given
     const std::string get_prev();
 
