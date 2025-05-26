@@ -69,9 +69,17 @@ void Facade::history_save(const std::string &expression) noexcept {
 }
 
 const std::string Facade::history_get_prev() {
-    return this->history.get_prev();
+    std::string result = "0";
+    if (!this->history.empty()) {
+        result = this->history.get_prev();
+    }
+    return result;
 }
 
 const std::string Facade::history_get_next() {
-    return this->history.get_next();
+    std::string result = "0";
+    if (!this->history.empty()) {
+        result = this->history.get_next();
+    }
+    return result;
 }
