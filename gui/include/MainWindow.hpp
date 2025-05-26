@@ -39,4 +39,8 @@ private slots:
     void subsractMemory();
 
     void getMemory();
+
+    void historyNext();
+
+    void historyPrev();
 };

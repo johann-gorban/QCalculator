@@ -6,6 +6,7 @@
 #include <QLayout>
 #include <QVBoxLayout>
 
+#include <string>
 #include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
@@ -27,7 +28,7 @@ void MainWindow::setupUI() {
 
     QFile ui_form(ui_path);
 
-    this->setFixedSize(425, 450);
+    // this->setFixedSize(425, 450);
 
     if (!ui_form.open(QFile::ReadOnly)) {
         std::cout << "Error: cannot open file" << std::endl;
@@ -77,6 +78,9 @@ void MainWindow::setupKeyboard() {
     this->buttons["M+"] = this->centralWidget->findChild<QPushButton*>("ButtonMemoryAdd");
     this->buttons["M-"] = this->centralWidget->findChild<QPushButton*>("ButtonMemorySubstract");
 
+    this->buttons["HistoryNext"] = this->centralWidget->findChild<QPushButton*>("ButtonHistoryNext");
+    this->buttons["HistoryPrev"] = this->centralWidget->findChild<QPushButton*>("ButtonHistoryPrev");
+
     this->buttons["Remove"] = this->centralWidget->findChild<QPushButton *>("ButtonBackspace");
     this->buttons["Calculate"] = this->centralWidget->findChild<QPushButton*>("ButtonProcess");
     this->buttons["Clear"] = this->centralWidget->findChild<QPushButton*>("ButtonClearInput");
@@ -107,6 +111,9 @@ void MainWindow::setupSlots() {
     QObject::connect(this->buttons["M+"], &QPushButton::clicked, this, &MainWindow::addMemory);
     QObject::connect(this->buttons["M-"], &QPushButton::clicked, this, &MainWindow::subsractMemory);
 
+    QObject::connect(this->buttons["HistoryPrev"], &QPushButton::clicked, this, &MainWindow::historyPrev);
+    QObject::connect(this->buttons["HistoryNext"], &QPushButton::clicked, this, &MainWindow::historyNext);
+
     QObject::connect(this->buttons["add"] , &QPushButton::clicked, this, [this]() { this->outputDisplay->insert("+"); });
     QObject::connect(this->buttons["sub"] , &QPushButton::clicked, this, [this]() { this->outputDisplay->insert("-"); });
     QObject::connect(this->buttons["mul"] , &QPushButton::clicked, this, [this]() { this->outputDisplay->insert("*"); });
@@ -119,9 +126,11 @@ void MainWindow::setupSlots() {
 void MainWindow::calculate() {
     QString displayData = this->outputDisplay->getContent();
     if (!this->outputDisplay->isAnswer()) {
-        displayData = QString::fromStdString(this->facade->calculate(displayData.toStdString()));
+        std::string result = this->facade->calculate(displayData.toStdString());
+        displayData = QString::fromStdString(result);
     }
     this->outputDisplay->setAnswer(displayData);
+    this->facade->history_save(displayData.toStdString());
 }
 
 void MainWindow::clear() {
@@ -149,4 +158,14 @@ void MainWindow::subsractMemory() {
 void MainWindow::getMemory() {
     QString memoryData = QString::fromStdString(this->facade->memory_read());
     this->outputDisplay->setAnswer(memoryData);
+}
+
+void MainWindow::historyNext() {
+    QString expression = QString::fromStdString(this->facade->history_get_next());
+    this->outputDisplay->setExpression(expression);
+}
+
+void MainWindow::historyPrev() {
+    QString expression = QString::fromStdString(this->facade->history_get_prev());
+    this->outputDisplay->setExpression(expression);
 }

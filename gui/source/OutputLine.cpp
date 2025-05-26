@@ -53,3 +53,8 @@ void OutputLine::insertFunction(const QString &text) {
     // Set cursor one character left
     this->outputDisplay->setCursorPosition(this->outputDisplay->text().length() - 1);
 }
+
+void OutputLine::setExpression(const QString &expression) {
+    this->isAnswerFlag = false;
+    this->outputDisplay->setText(expression);
+}

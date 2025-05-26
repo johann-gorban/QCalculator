@@ -21,6 +21,8 @@ public slots:
 
     void insert(const QString &text);
 
+    void setExpression(const QString &expression);
+
     void insertFunction(const QString &text);
 
     void clear();
