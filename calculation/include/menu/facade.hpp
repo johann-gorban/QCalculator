@@ -31,4 +31,10 @@ public:
     const void memory_clear() noexcept;
 
     const std::string memory_read() const noexcept;
+
+    void history_save(const std::string &expression) noexcept;
+
+    const std::string history_get_prev();
+    
+    const std::string history_get_next();
 };

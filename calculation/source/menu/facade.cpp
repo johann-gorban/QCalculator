@@ -63,3 +63,15 @@ const void Facade::memory_clear() noexcept {
 const std::string Facade::memory_read() const noexcept {
     return std::to_string(this->memory.get_value());
 }
+
+void Facade::history_save(const std::string &expression) noexcept {
+    this->history.save(expression);
+}
+
+const std::string Facade::history_get_prev() {
+    return this->history.get_prev();
+}
+
+const std::string Facade::history_get_next() {
+    return this->history.get_next();
+}
