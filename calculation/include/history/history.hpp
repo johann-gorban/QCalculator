@@ -8,9 +8,12 @@
 class History {
 private:
     std::vector<std::string> expressions;
+    std::size_t current_index = 0;
 public:
     void save(const std::string &expression) noexcept;
 
     // Returns empty string if invalid index given
-    const std::string get(const std::size_t &index);
+    const std::string get_prev();
+
+    const std::string get_next();
 };
