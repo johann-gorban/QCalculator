@@ -7,6 +7,8 @@ file(GLOB_RECURSE CLI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp
 )
 
+add_executable(Calculator ${CLI_SOURCES})
+
 target_include_directories(Calculator
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -16,4 +18,3 @@ target_link_libraries(Calculator
     calculation
 )
 
-add_executable(Calculator ${CLI_SOURCES})

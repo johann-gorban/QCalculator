@@ -3,7 +3,7 @@
 #include <string>
 #include <memory>
 
-#include "facade.hpp"
+#include "menu/facade.hpp"
 
 class MenuCommand;
 using menu_command_ptr = std::shared_ptr<MenuCommand>;

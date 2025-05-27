@@ -1,4 +1,4 @@
-#include "cli/menu.hpp"
+#include "menu.hpp"
 
 int main() {
     CLIMenu cli_menu;

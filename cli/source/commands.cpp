@@ -1,4 +1,4 @@
-#include "cli/commands.hpp"
+#include "commands.hpp"
 
 MenuCommand::MenuCommand(const std::string &description) : _description(description) {}
 

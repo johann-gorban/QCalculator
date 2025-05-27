@@ -1,5 +1,5 @@
-#include "cli/menu.hpp"
-#include "cli/commands.hpp"
+#include "menu.hpp"
+#include "commands.hpp"
 
 #include <iostream>
 
