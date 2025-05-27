@@ -2,8 +2,6 @@
 #include "parsing/states.hpp"
 #include "token_manager.hpp"
 
-#include <iostream>
-
 void ParseStartState::handle_token(ParserContext& context, token_ptr token) {
     state_ptr next_state = std::make_shared<ParseEndState>();
     TokenType token_type = token->get_type();
