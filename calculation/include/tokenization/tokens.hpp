@@ -9,7 +9,8 @@ enum class TokenType {
     Function,
     Number,
     Parenthesis,
-    Separator
+    Separator,
+    End
 };
 
 class Token;

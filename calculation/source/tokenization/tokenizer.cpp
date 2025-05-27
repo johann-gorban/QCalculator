@@ -10,6 +10,7 @@ std::vector<token_ptr> Tokenizer::tokenize(const std::string &expression) {
     
     // Process to end the expression parsing
     context.handle_char('\0');
+    context.handle_char('\0');
 
     return context.get_tokens();
 }

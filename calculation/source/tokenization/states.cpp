@@ -89,7 +89,6 @@ void OperatorState::handle_char(TokenizerContext &context, char c) {
     else {
         this->emit_token_from_buffer(context);
         context.append_buffer(c);
-
         static StateFactory state_factory;
         new_state = state_factory.create(c);
     }
@@ -219,11 +218,13 @@ void SeparatorState::emit_token_from_buffer(TokenizerContext &context) {
 //////////////////////////////////////////////////////////////////////////////////////////
 
 void EndState::handle_char(TokenizerContext &context, char c) {
+    this->emit_token_from_buffer(context);
     context.set_state(std::make_shared<StartState>());
 }
 
 void EndState::emit_token_from_buffer(TokenizerContext &context) {
-    
+    context.append_token(std::make_shared<Token>("", TokenType::End));
+    context.clear_buffer();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////

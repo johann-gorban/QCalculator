@@ -2,6 +2,8 @@
 #include "parsing/states.hpp"
 #include "token_manager.hpp"
 
+#include <iostream>
+
 void ParseStartState::handle_token(ParserContext& context, token_ptr token) {
     state_ptr next_state = std::make_shared<ParseEndState>();
     TokenType token_type = token->get_type();
@@ -36,6 +38,9 @@ void ParseStartState::handle_token(ParserContext& context, token_ptr token) {
     }
     else if (token_type == TokenType::Separator) {
         throw std::runtime_error("Syntax error: separator cannot be in the beginning");
+    }
+    else if (token_type == TokenType::End) {
+        throw std::runtime_error("Empty expression given");
     }
     else {
         throw std::runtime_error("Syntax error: unknown token type");
@@ -89,6 +94,9 @@ void ParseNumberState::handle_token(ParserContext& context, token_ptr token) {
         }
 
     }
+    else if (token_type == TokenType::End) {
+        next_state = std::make_shared<ParseEndState>();
+    }
     else {
         throw std::runtime_error("Syntax error: unknown token type");
     }
@@ -125,7 +133,10 @@ void ParseBinaryOperatorState::handle_token(ParserContext& context, token_ptr to
         else if (token_data == "RIGHT_PARENTHESIS") {
             throw std::runtime_error("Syntax error: left parenthesis cannot follow after operator");
         }
-
+    
+    }
+    else if (token_type == TokenType::End) {
+        throw std::runtime_error("Syntax error: expression cannot end with binary operator");
     }
     else {
         throw std::runtime_error("Syntax error: unknown token type");
@@ -159,6 +170,9 @@ void ParseUnaryOperatorState::handle_token(ParserContext& context, token_ptr tok
         }
 
     }
+    else if (token_type == TokenType::End) {
+        throw std::runtime_error("Syntax error: unary operator cannot end the expression");
+    }
     else if (token_type == TokenType::Operator || token_type == TokenType::Separator) {
         throw std::runtime_error("Syntax error: operator or separator cannot follow after unary operator");
     }
@@ -186,6 +200,9 @@ void ParseFunctionState::handle_token(ParserContext& context, token_ptr token) {
     }
     else if (token_type == TokenType::Operator || token_type == TokenType::Number || token_type == TokenType::Function || token_type == TokenType::Separator) {
         throw std::runtime_error("Syntax error: only left parenthesis can follow after function");
+    }
+    else if (token_type == TokenType::End) {
+        throw std::runtime_error("Syntax error: expression cannot end with function name");
     }
     else {
         throw std::runtime_error("Syntax error: unknown token type");
@@ -215,7 +232,7 @@ void ParseSeparatorState::handle_token(ParserContext& context, token_ptr token) 
     }
     else if (token_type == TokenType::Parenthesis) {
         const std::string token_data = token->get_data();
-        if (token_data == "LEFT_PARANTHESIS") {
+        if (token_data == "LEFT_PARENTHESIS") {
             token_ptr extended_token = std::make_shared<ParenthesisToken>(*token);
             context.append_extended_token(extended_token);
             next_state = std::make_shared<ParseLeftParenthesisState>();
@@ -224,6 +241,9 @@ void ParseSeparatorState::handle_token(ParserContext& context, token_ptr token) 
             throw std::runtime_error("Syntax error: right parenthesis cannot follow after separator");
         }
 
+    }
+    else if (token_type == TokenType::End) {
+        throw std::runtime_error("Syntax error: expression cannot end with separator");
     }
     else {
         throw std::runtime_error("Syntax error: unknown token type");
@@ -267,6 +287,9 @@ void ParseLeftParenthesisState::handle_token(ParserContext& context, token_ptr t
             throw std::runtime_error("Syntax error: right parenthesis cannot follow after separator");
         }
 
+    }
+    else if (token_type == TokenType::End) {
+        throw std::runtime_error("Syntax error: expression cannot end with left parenthesis");
     }
     else {
         throw std::runtime_error("Syntax error: unknown token type");
@@ -316,7 +339,9 @@ void ParseRightParenthesisState::handle_token(ParserContext& context, token_ptr 
             context.append_extended_token(extended_token);
             next_state = std::make_shared<ParseRightParenthesisState>();
         }
-
+    }
+    else if (token_type == TokenType::End) {
+        next_state = std::make_shared<ParseEndState>();
     }
     else {
         throw std::runtime_error("Syntax error: unknown token type");
