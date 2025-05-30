@@ -8,7 +8,6 @@ std::vector<token_ptr> Parser::parse(const std::vector<token_ptr> &tokens) {
 
     for (const auto &token : tokens) {
         context.handle_token(token);
-        std::cout << int(token->get_type()) << std::endl;
     }
 
     return context.get_extended_tokens();
