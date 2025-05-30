@@ -1,5 +1,6 @@
 #include "sorting/sorter.hpp"
 #include "sorting/sort_command_manager.hpp"
+#include "sorting/sort_context.hpp"
 
 #include <stack>
 #include <stdexcept>
@@ -11,14 +12,18 @@ std::vector<token_ptr> Sorter::rpn_sort(const std::vector<token_ptr> &tokens) {
     // Stack for intermediate computations
     std::stack<token_ptr> token_stack;
 
+    SortContext context = SortContext(token_stack, result);
+
     static SortCommandManager command_manager;
     for (const auto& token : tokens) {
+        context.set_current_token(token);
         auto command = command_manager.get_command(token);
-        command->execute(token_stack, result, token);
+        command->execute(context);
     }
 
     sort_command_ptr end_command = std::make_shared<SortEndCommand>();
-    end_command->execute(token_stack, result, nullptr);
+    context.set_current_token(nullptr);
+    end_command->execute(context);
 
-    return result;
+    return context.get_result();
 }   
