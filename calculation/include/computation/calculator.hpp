@@ -8,5 +8,5 @@
 
 class Calculator {
 public:
-    double calculate(const std::vector<command_ptr> &commands);
+    static double calculate(const std::vector<command_ptr> &commands);
 };

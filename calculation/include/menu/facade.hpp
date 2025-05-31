@@ -1,10 +1,5 @@
 #pragma once
 
-#include "sorting/sorter.hpp"
-#include "translating/translator.hpp"
-#include "computation/calculator.hpp"
-#include "tokenization/tokenizer.hpp"
-#include "parsing/parser.hpp"
 #include "memory/memory.hpp"
 #include "history/history.hpp"
 
@@ -12,11 +7,6 @@
 
 class Facade {
 private:
-    Tokenizer tokenizer;
-    Parser parser;
-    Sorter sorter;
-    Translator translator;
-    Calculator calculator;
     Memory memory;
     History history;
 public:

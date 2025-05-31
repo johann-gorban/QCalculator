@@ -6,5 +6,5 @@
 
 class Parser {
 public:
-    std::vector<token_ptr> parse(const std::vector<token_ptr> &tokens);
+    static std::vector<token_ptr> parse(const std::vector<token_ptr> &tokens);
 };

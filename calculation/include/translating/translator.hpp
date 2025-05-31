@@ -9,5 +9,5 @@
 
 class Translator {
 public:
-    const std::vector<command_ptr> translate_tokens(std::vector<token_ptr> &tokens) const;
+    static const std::vector<command_ptr> translate_tokens(std::vector<token_ptr> &tokens);
 };
