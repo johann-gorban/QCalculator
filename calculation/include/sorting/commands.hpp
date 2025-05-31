@@ -1,7 +1,7 @@
 #pragma once
 
 #include "parsing/extended_tokens.hpp"
-#include "sort_context.hpp"
+#include "context.hpp"
 
 #include <vector>
 #include <stack>

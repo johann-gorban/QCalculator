@@ -1,4 +1,4 @@
-#include "sorting/sort_commands.hpp"
+#include "sorting/commands.hpp"
 
 #include <stdexcept>
 

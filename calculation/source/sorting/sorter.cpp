@@ -1,6 +1,6 @@
 #include "sorting/sorter.hpp"
-#include "sorting/sort_command_manager.hpp"
-#include "sorting/sort_context.hpp"
+#include "sorting/command_manager.hpp"
+#include "sorting/context.hpp"
 
 #include <stack>
 #include <stdexcept>

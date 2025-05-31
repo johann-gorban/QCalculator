@@ -1,4 +1,4 @@
-#include "sorting/sort_context.hpp"
+#include "sorting/context.hpp"
 
 SortContext::SortContext(std::stack<token_ptr> &stack, std::vector<token_ptr> &result) : _stack(stack), _result(result) {
 }
