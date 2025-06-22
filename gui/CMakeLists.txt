@@ -33,7 +33,7 @@ target_include_directories(Calculator
 
 target_link_libraries(Calculator
     PRIVATE
-        calculation
+        mathexpr
         Qt6::Core
         Qt6::Widgets
         Qt6::UiTools

@@ -15,6 +15,6 @@ target_include_directories(Calculator
 )
 
 target_link_libraries(Calculator
-    calculation
+    mathexpr
 )
 
